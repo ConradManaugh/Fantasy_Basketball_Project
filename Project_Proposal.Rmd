@@ -16,6 +16,15 @@ With all the possible statistics to consider (depending on the particular fantas
 Our idea stated above matches the course focus on statistical programing because it involves taking a large data set and using a data pipeline in order to use that dataset to make prediction on NBA players future performance based on their past performance (their past statistics). We will also be providing visual representation of the data in the form of graphs which will compare players, as well as, coding a shiny app for fantasy league participants to easily customize the data pipeline to their personal fantasy league rules. 
 
 
+### Related Work
+
+Someone had tried to analyze the data to prepare for the draft strategy for the new season in 14-team basketball league. He took the data from cutting and copying on ESPN.com and NBA.com. He put a flat file of the top 250 players from the previous season. Then he created a binary variable for the top 42 players (3 players per 14 teams). The “1” means the player is a top 3 players, otherwise he is not. He used 28 independent variables from the previous season to identify the “top 42 players”. He came up with conclusions that field-goal percentage, assist and blocks are the difference-makers because most players in NBA are good at points and rebounds. However, assists and blocks are rarer so that they are more valuable to a fantasy team. 
+Other projects include computing the average stats for each categories of players. Some of the other are having the graph comparing the specific player and league’s average. Or group comes up data calculating the standard deviation to see how far away a player is from average.
+
+Comparing to other projects, our group will use the bigger dataset. Most projects are using previous year’s dataset for predicting the future data. We are going to use the data in the past five years to make a more precise prediction for player’s future performance. One of the most difference is that our group will use the Shiny app in R. Most projects online are only included complex graphs or prolix passages that make reader hard to understand their ideas. For us, we will make the Shiny app that looks very easy and clear for people to manipulate. For example, we will list all our players. People can click each of them. Then they can look at each player’s trend data whether they are getting better or worse or the graph comparison between players. It is very simple for people to control in the app. All the data fantasy NBA participants want it will exist in the app. If they want to see the difference between players, they also can click the graphs to see their difference in various categories, such as points, rebounds, assists and so on, so they will figure out what type of player they are looking for. Thus, our app is serving as a recommender for fantasy basketball player to select their team. 
+
+
+
 ### Methods
 
 
@@ -58,6 +67,16 @@ In order to complete the project, we must complete the following tasks…
 ![Figure 1. The ganett chart above describes the timeline set in place to complete the tasks stated for this project.](ganett_chart.png)
 
 
+### Conclusion
+In general, our goal is to help fantasy basketball fans draft their players by analyzing players’ past statistics in order to make the optimal team for themselves. We will create the tool for fantasy NBA participants who will use it during the draft to come out the best team selections. Inside the app, we will follow the analytical data pipelines phases. We are going to import data from website, and then we will tidy the data by using stringr, rvest, and tidyr. 
+For the dataset, we will organize each player’s average score. Each observation will contain the name, team name, position, weight, age, and so on. The scores will come out by the algorithm of fantasy inside, likely each statistical category counts for a set number of points. The variable include points, rebounds, assists, blocks, steals, turnovers, field goal percentage, and free throw percentage. 
+We will also be using the data to predict for the coming years data by time series modeling. The method is to take every individual player’ statistics to a use series model, so we can predict how individuals will perform next year. After that, the user will be able to see the prediction data set multiplied by a vector of user weight inputs. 
+Inside the App, we will also include the visualization part. The overall layout for shiny app will consist a tab for changing setting on one side. There is another tab for clicking players on the other side. There will be a list of selected players on the bottom. Inside the player click, we will have rows sorted by players expected total score in upcoming year in descending order. In each player’s page, we will include some graphs.
+	For the graphs, we will compare players and analyze individual player over time. For comparing players, will be using side by side bar plots that the x-axis represents points and y-axis represents the transferred fantasy points. It will be sorted by many categories of statistics, such as points, rebounds, assists, and so on. We will be able to see directly who is better according to the graphs. For the individual player graph, we will be using a scatterplot graph with years on the x-axis and the total fantasy points on the y-axis. It will be presented by the best fit regression line to be determined. 
+	Again, our fantasy team selector tool will include the graphical representations of current and past statistics of players and graphical comparisons of players. By looking at some pre-existing projects, I find out that out project’s novelty is the convenience and clear path to the success of the fantasy NBA life. Some articles are being too long or complex analysis of basketball itself. Others are having no graphs or comparisons between players. Our app will help people tidy the data so that they can click whatever player they want to look at inside the app. What is more, when they have trouble at deciding to select player, they can open the charts or comparison graphs to see what kind of categories they need to. Overall, I think it will be a great tool for fantasy NBA participants to use. 
+
+
+
 ### References
 
 
@@ -96,4 +115,9 @@ Winston Chang, Joe Cheng, JJ Allaire, Yihui Xie and
   Jonathan McPherson (2017). shiny: Web Application
   Framework for R. R package version 1.0.5.
   https://CRAN.R-project.org/package=shiny
+
+Wrinn, Corey. 2015. “Data Analysis in Fantasy Basketball: Making it Easy to Beat Your Friends.” Rapidinsightinc.com. Oct.22, 2015. http://www.rapidinsightinc.com/data-analysis-fantasy-basketball-making-easy-beat-friends/
+
+
+Tang, Steven. 2014. “Drafting a Fantasy Basketball Team With Help From Statistics and a Knapsack.” Medium.com. Oct 21,2014. https://medium.com/fun-with-data-and-stats/drafting-a-fantasy-basketball-team-c94967464908
 
