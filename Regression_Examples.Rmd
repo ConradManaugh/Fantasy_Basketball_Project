@@ -263,10 +263,26 @@ m=m+5
 tail(Assist,25)
 ```
 
+```{r finding steals}
+
+Steal=rep(NA,length(All_Season_Stats$Player))##This will be the total steals in each season
+
+mm=1
+while(mm<=(5*length(All_Season_Stats$Player))){
+Steal[mm]=All_Season_Stats$STL_18[floor(mm/5)+1]
+Steal[mm+1]=All_Season_Stats$STL_17[floor(mm/5)+1]###Every 5th entry is the steal for 18, and so on
+Steal[mm+2]=All_Season_Stats$STL_16[floor(mm/5)+1]
+Steal[mm+3]=All_Season_Stats$STL_15[floor(mm/5)+1]
+Steal[mm+4]=All_Season_Stats$STL_14[floor(mm/5)+1]
+
+mm=mm+5
+
+}
+tail(Steal,25)
+```
+
+
 ```{r}
-
-Steal=rep(NA,length(All_Season_Stats$Player))##This will be the average steals per game in each season
-
 Block=rep(NA,length(All_Season_Stats$Player))##This will be the average blocks per game in each season
 
 TOV=rep(NA,length(All_Season_Stats$Player))##This will be the average turnovers per game in each season
