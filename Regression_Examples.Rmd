@@ -217,12 +217,39 @@ tail(OfReb,25)
 
 
 
-```{r}
+```{r finding DefReb}
 DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for defensive rebounds
+
+
+
+ww=1
+while(ww<=(5*length(All_Season_Stats$Player))){
+DefReb[ww]=All_Season_Stats$DRB_18[floor(ww/5)+1]
+DefReb[ww+1]=All_Season_Stats$DRB_17[floor(ww/5)+1]###Every 5th entry is the defreb for 18, and so on
+DefReb[ww+2]=All_Season_Stats$DRB_16[floor(ww/5)+1]
+DefReb[ww+3]=All_Season_Stats$DRB_15[floor(ww/5)+1]
+DefReb[ww+4]=All_Season_Stats$DRB_14[floor(ww/5)+1]
+
+ww=ww+5
+
+}
+tail(DefReb,25)
+
 
 ##Not going to use total rebounds, as in the shiny app a user can just make OfReb and DefReb the same for this result
 
+
+```
+
+
+```{r}
+
 Assist=rep(NA,length(All_Season_Stats$Player))##This will be the average assists per game in each season
+
+
+```
+
+```{r}
 
 Steal=rep(NA,length(All_Season_Stats$Player))##This will be the average steals per game in each season
 
