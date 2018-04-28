@@ -176,7 +176,7 @@ All_Season_Stats=read_csv(&quot;All_Season_Stats.csv&quot;)</code></pre>
 ## #   FTA_14 &lt;int&gt;, ORB_14 &lt;int&gt;, DRB_14 &lt;int&gt;, TRB_14 &lt;int&gt;, AST_14 &lt;int&gt;,
 ## #   STL_14 &lt;int&gt;, BLK_14 &lt;int&gt;, TOV_14 &lt;int&gt;, PF_14 &lt;int&gt;, `PS/G_14` &lt;int&gt;</code></pre>
 <pre class="r"><code>##The data as it stands could be reorganized, I am going to reorgainzie it by season with an emphasys on player age,so each player will have 5 observations at max.</code></pre>
-<pre class="r"><code>Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is yearly averages per game for different stats
+<pre class="r"><code>Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is total yearly for different stats
 
 i=1 
 
@@ -259,7 +259,7 @@ Year=rep(y,length(All_Season_Stats$Player))
 tail(Year,25)</code></pre>
 <pre><code>##  [1] 2018 2017 2016 2015 2014 2018 2017 2016 2015 2014 2018 2017 2016 2015
 ## [15] 2014 2018 2017 2016 2015 2014 2018 2017 2016 2015 2014</code></pre>
-<pre class="r"><code>FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on average per game in years 2014 to 2018
+<pre class="r"><code>FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
 
 ii=1
 while(ii&lt;=(5*length(All_Season_Stats$Player))){
@@ -438,7 +438,7 @@ Bhind_Arc=rep(NA,5*length(All_Season_Stats$Player))##This will contain the 3 poi
 jj=1
 while(jj&lt;=(5*length(All_Season_Stats$Player))){
 Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/5)+1]
-Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the field goals for 18, and so on
+Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the 3 points made for 18, and so on
 Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/5)+1]
 Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/5)+1]
 Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/5)+1]
@@ -450,7 +450,11 @@ tail(Bhind_Arc,25)</code></pre>
 ##  [9]  57.000      NA  51.000  21.000   0.475   7.000   2.000   0.000
 ## [17]   0.000   0.466   0.000   0.000   2.000      NA      NA      NA
 ## [25]      NA</code></pre>
-<pre class="r"><code>In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made per game throughout the years
+<pre class="r"><code>In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made total throughout the years
+
+
+
+
 
 FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made per game throughout the years
 

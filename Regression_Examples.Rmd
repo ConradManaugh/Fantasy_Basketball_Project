@@ -18,7 +18,7 @@ tail(All_Season_Stats,25)
 ```
 ```{r Creating Name}
 
-Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is yearly averages per game for different stats
+Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is total yearly for different stats
 
 i=1 
 
@@ -116,7 +116,7 @@ tail(Year,25)
 ```{r Finding FG}
 
 
-FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on average per game in years 2014 to 2018
+FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
 
 ii=1
 while(ii<=(5*length(All_Season_Stats$Player))){
@@ -142,7 +142,7 @@ Bhind_Arc=rep(NA,5*length(All_Season_Stats$Player))##This will contain the 3 poi
 jj=1
 while(jj<=(5*length(All_Season_Stats$Player))){
 Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/5)+1]
-Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the field goals for 18, and so on
+Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the 3 points made for 18, and so on
 Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/5)+1]
 Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/5)+1]
 Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/5)+1]
@@ -157,7 +157,11 @@ tail(Bhind_Arc,25)
 
 
 ```{r}
-In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made per game throughout the years
+In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made total throughout the years
+
+
+
+
 
 FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made per game throughout the years
 
