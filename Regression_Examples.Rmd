@@ -74,6 +74,26 @@ tail(Pos2,25)##Now Pos2 is a vector of positions as factors
 Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
 
 
+
+
+
+
+
+k=1 
+
+
+while(floor(k/5)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+
+Age[k]=All_Season_Stats$Age[floor(k/5)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
+Age[k+1]=All_Season_Stats$Age[floor(k/5)+1]-1
+Age[k+2]=All_Season_Stats$Age[floor(k/5)+1]-2
+Age[k+3]=All_Season_Stats$Age[floor(k/5)+1]-3
+Age[k+4]=All_Season_Stats$Age[floor(k/5)+1]-4
+
+k=k+5
+}
+Age
+
 ```
 
 ```{r}
