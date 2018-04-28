@@ -18,13 +18,40 @@ tail(All_Season_Stats,25)
 ```
 ```{r}
 
-Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player
-Pos2=(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
+Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is yearly averages per game for different stats
 
-data.frame=c()
+Pos2=rep(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
+
+Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
+
+##Tm I am not going to use for anaylsys
+
+#I won't be using games played, games started, or minutes played in the analysis
+
+Year=rep(NA,5*length(All_Season_Stats$Player))##This will contain years 2018 through 2014
+
+FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on average per game in years 2014 to 2018
+
+#I won't be using field goals attempted
+
+Bhind_Arc=rep(NA,5*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
+
+In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made per game throughout the years
+
+FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made per game throughout the years
+
+OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made per game thruoghout the seasons
+
+DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for defensive rebounds
+
+##Not going to use total rebounds, as in the shiny app a user can just make OfReb and DefReb the same for this result
+
+
+
+
 
   
   
-}
+
 ```
 
