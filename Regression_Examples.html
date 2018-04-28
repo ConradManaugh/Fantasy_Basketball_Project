@@ -226,7 +226,7 @@ tail(Pos2,25)##Now Pos2 is a vector of positions as factors</code></pre>
 <pre class="r"><code>Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
 
 
-
+predAge=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a variable of the age that he will be predicing
 
 
 
@@ -236,6 +236,11 @@ k=1
 
 while(floor(k/5)+1&lt;=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
 
+  
+predAge[k]=All_Season_Stats$Age[floor(k/5)+1]+1##The max age plus one is the predicted age
+  
+  
+  
 Age[k]=All_Season_Stats$Age[floor(k/5)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
 Age[k+1]=All_Season_Stats$Age[floor(k/5)+1]-1
 Age[k+2]=All_Season_Stats$Age[floor(k/5)+1]-2
@@ -457,60 +462,60 @@ tail(Fouls,25)</code></pre>
 <pre><code>##  [1] 133  NA  NA  NA  NA  55 104  17 158  NA 119 136  13 175 210 122 166
 ## [18]  22 170 124  14  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>##I won't be using points as we can just do 3 * 3 pointers made 2 * field goals made and 1 * free throws made</code></pre>
-<pre class="r"><code>DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
+<pre class="r"><code>DatSet=data.frame(Name,Pos2,Age,predAge,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
 tail(DatSet,25)</code></pre>
-<pre><code>##               Name Pos2 Age Year  FG Bhind_Arc  In_Arc   FreeT OfReb
-## 2676  Zach Collins    C  20 2018 115    35.000  80.000  27.000    45
-## 2677  Zach Collins    C  19 2017  NA        NA      NA      NA    NA
-## 2678  Zach Collins    C  18 2016  NA        NA      NA      NA    NA
-## 2679  Zach Collins    C  17 2015  NA        NA      NA      NA    NA
-## 2680  Zach Collins    C  16 2014  NA        NA      NA      NA    NA
-## 2681   Zach LaVine   SG  22 2018 136    42.000  94.000  87.000     9
-## 2682   Zach LaVine   SG  21 2017 326   120.000 206.000 117.000    19
-## 2683   Zach LaVine   SG  20 2016 433     0.452   0.389   0.482   203
-## 2684   Zach LaVine   SG  19 2015 286    57.000 229.000 149.000    27
-## 2685   Zach LaVine   SG  18 2014  NA        NA      NA      NA    NA
-## 2686 Zach Randolph   PF  36 2018 361    51.000 310.000  84.000    97
-## 2687 Zach Randolph   PF  35 2017 433    21.000 412.000 141.000   182
-## 2688 Zach Randolph   PF  34 2016 431     0.475   0.231   0.482   216
-## 2689 Zach Randolph   PF  33 2015 454     7.000 447.000 228.000   225
-## 2690 Zach Randolph   PF  32 2014 560     2.000 558.000 250.000   265
-## 2691 Zaza Pachulia    C  33 2018 149     0.000 149.000  75.000    89
-## 2692 Zaza Pachulia    C  32 2017 164     0.000 164.000  98.000   140
-## 2693 Zaza Pachulia    C  31 2016 219     0.466   0.000   0.469   276
-## 2694 Zaza Pachulia    C  30 2015 240     0.000 240.000 126.000   197
-## 2695 Zaza Pachulia    C  29 2014 149     0.000 149.000 110.000   141
-## 2696       Zhou Qi    C  22 2018   6     2.000   4.000   8.000     6
-## 2697       Zhou Qi    C  21 2017  NA        NA      NA      NA    NA
-## 2698       Zhou Qi    C  20 2016  NA        NA      NA      NA    NA
-## 2699       Zhou Qi    C  19 2015  NA        NA      NA      NA    NA
-## 2700       Zhou Qi    C  18 2014  NA        NA      NA      NA    NA
-##       DefReb Assist Steal Block TOV Fouls
-## 2676 176.000     52    17    31  58   133
-## 2677      NA     NA    NA    NA  NA    NA
-## 2678      NA     NA    NA    NA  NA    NA
-## 2679      NA     NA    NA    NA  NA    NA
-## 2680      NA     NA    NA    NA  NA    NA
-## 2681  85.000     72    24     4  43    55
-## 2682 141.000    139    41    10  85   104
-## 2683   0.793    201   228   251  69    17
-## 2684 187.000    276    54    10 193   158
-## 2685      NA     NA    NA    NA  NA    NA
-## 2686 300.000    127    42    10 116   119
-## 2687 416.000    122    38    10  99   136
-## 2688   0.796    350   529   142  43    13
-## 2689 522.000    153    69    14 156   175
-## 2690 530.000    200    54    23 183   210
-## 2691 232.000    109    38    17  72   122
-## 2692 270.000    132    59    33  87   166
-## 2693   0.768    469   718   128  64    22
-## 2694 303.000    178    80    21 133   170
-## 2695 192.000    136    45    14  92   124
-## 2696  16.000      2     2    14  10    14
-## 2697      NA     NA    NA    NA  NA    NA
-## 2698      NA     NA    NA    NA  NA    NA
-## 2699      NA     NA    NA    NA  NA    NA
-## 2700      NA     NA    NA    NA  NA    NA</code></pre>
+<pre><code>##               Name Pos2 Age predAge Year  FG Bhind_Arc  In_Arc   FreeT
+## 2676  Zach Collins    C  20      21 2018 115    35.000  80.000  27.000
+## 2677  Zach Collins    C  19      NA 2017  NA        NA      NA      NA
+## 2678  Zach Collins    C  18      NA 2016  NA        NA      NA      NA
+## 2679  Zach Collins    C  17      NA 2015  NA        NA      NA      NA
+## 2680  Zach Collins    C  16      NA 2014  NA        NA      NA      NA
+## 2681   Zach LaVine   SG  22      23 2018 136    42.000  94.000  87.000
+## 2682   Zach LaVine   SG  21      NA 2017 326   120.000 206.000 117.000
+## 2683   Zach LaVine   SG  20      NA 2016 433     0.452   0.389   0.482
+## 2684   Zach LaVine   SG  19      NA 2015 286    57.000 229.000 149.000
+## 2685   Zach LaVine   SG  18      NA 2014  NA        NA      NA      NA
+## 2686 Zach Randolph   PF  36      37 2018 361    51.000 310.000  84.000
+## 2687 Zach Randolph   PF  35      NA 2017 433    21.000 412.000 141.000
+## 2688 Zach Randolph   PF  34      NA 2016 431     0.475   0.231   0.482
+## 2689 Zach Randolph   PF  33      NA 2015 454     7.000 447.000 228.000
+## 2690 Zach Randolph   PF  32      NA 2014 560     2.000 558.000 250.000
+## 2691 Zaza Pachulia    C  33      34 2018 149     0.000 149.000  75.000
+## 2692 Zaza Pachulia    C  32      NA 2017 164     0.000 164.000  98.000
+## 2693 Zaza Pachulia    C  31      NA 2016 219     0.466   0.000   0.469
+## 2694 Zaza Pachulia    C  30      NA 2015 240     0.000 240.000 126.000
+## 2695 Zaza Pachulia    C  29      NA 2014 149     0.000 149.000 110.000
+## 2696       Zhou Qi    C  22      23 2018   6     2.000   4.000   8.000
+## 2697       Zhou Qi    C  21      NA 2017  NA        NA      NA      NA
+## 2698       Zhou Qi    C  20      NA 2016  NA        NA      NA      NA
+## 2699       Zhou Qi    C  19      NA 2015  NA        NA      NA      NA
+## 2700       Zhou Qi    C  18      NA 2014  NA        NA      NA      NA
+##      OfReb  DefReb Assist Steal Block TOV Fouls
+## 2676    45 176.000     52    17    31  58   133
+## 2677    NA      NA     NA    NA    NA  NA    NA
+## 2678    NA      NA     NA    NA    NA  NA    NA
+## 2679    NA      NA     NA    NA    NA  NA    NA
+## 2680    NA      NA     NA    NA    NA  NA    NA
+## 2681     9  85.000     72    24     4  43    55
+## 2682    19 141.000    139    41    10  85   104
+## 2683   203   0.793    201   228   251  69    17
+## 2684    27 187.000    276    54    10 193   158
+## 2685    NA      NA     NA    NA    NA  NA    NA
+## 2686    97 300.000    127    42    10 116   119
+## 2687   182 416.000    122    38    10  99   136
+## 2688   216   0.796    350   529   142  43    13
+## 2689   225 522.000    153    69    14 156   175
+## 2690   265 530.000    200    54    23 183   210
+## 2691    89 232.000    109    38    17  72   122
+## 2692   140 270.000    132    59    33  87   166
+## 2693   276   0.768    469   718   128  64    22
+## 2694   197 303.000    178    80    21 133   170
+## 2695   141 192.000    136    45    14  92   124
+## 2696     6  16.000      2     2    14  10    14
+## 2697    NA      NA     NA    NA    NA  NA    NA
+## 2698    NA      NA     NA    NA    NA  NA    NA
+## 2699    NA      NA     NA    NA    NA  NA    NA
+## 2700    NA      NA     NA    NA    NA  NA    NA</code></pre>
 <pre class="r"><code>fit1=glm(FG~I(Age^2)+Age+Name)
 head(fit1$coefficients,5)</code></pre>
 <pre><code>##        (Intercept)           I(Age^2)                Age 
@@ -521,19 +526,34 @@ head(fit1$coefficients,5)</code></pre>
 <pre><code>## Installing package into '/home/rstudio-user/R/x86_64-pc-linux-gnu-library/3.4'
 ## (as 'lib' is unspecified)</code></pre>
 <pre class="r"><code>library(&quot;ggplot2&quot;, lib.loc=&quot;~/R/x86_64-pc-linux-gnu-library/3.4&quot;)</code></pre>
-<pre class="r"><code>Fun_FG=function(Age,Name){
-  if(Name==&quot;Aaron Brooks&quot;){
+<pre class="r"><code>Fun_FG=function(Age,Name){##Function takes vector of names and ages contained in DatSet
+  
+  
+  
+  Age=(which(DatSet)==Name)##ages we care about are the ones when that name played
+  Age=c(Age,max(Age)+1)##we want to predict his next year so we find his oldest age and add one
+  if(Name==&quot;Aaron Brooks&quot;){##Aaron brooks is default so coef is 0
     coef=0
   }else{
   
 
-    coef=as.numeric(fit1$coefficients[(which(All_Season_Stats==Name))+2])
+    coef=as.numeric(fit1$coefficients[(which(All_Season_Stats==Name))+2])##the corresponding coefficient for each player is how that player changes the graph, with 3 non name coeffiecents and one default we only have to add 2 to shift it correctly
   }
-  -1.900e+03+(-3.069e+00*Age*Age)+162.52126*Age+coef
+  pred=-1.900e+03+(-3.069e+00*Age*Age)+162.52126*Age+coef##The other coeffiecents don't change
   
 }</code></pre>
-<pre class="r"><code>##install.packages(&quot;dplyr&quot;)
-##library(&quot;dplyr&quot;, lib.loc=&quot;~/R/x86_64-pc-linux-gnu-library/3.4&quot;)</code></pre>
+<pre class="r"><code>install.packages(&quot;dplyr&quot;)</code></pre>
+<pre><code>## Installing package into '/home/rstudio-user/R/x86_64-pc-linux-gnu-library/3.4'
+## (as 'lib' is unspecified)</code></pre>
+<pre class="r"><code>library(&quot;dplyr&quot;, lib.loc=&quot;~/R/x86_64-pc-linux-gnu-library/3.4&quot;)</code></pre>
+<pre><code>## 
+## Attaching package: 'dplyr'</code></pre>
+<pre><code>## The following objects are masked from 'package:stats':
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union</code></pre>
 </div>
 
 

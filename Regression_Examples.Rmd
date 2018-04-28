@@ -74,7 +74,7 @@ tail(Pos2,25)##Now Pos2 is a vector of positions as factors
 Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
 
 
-
+predAge=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a variable of the age that he will be predicing
 
 
 
@@ -84,6 +84,11 @@ k=1
 
 while(floor(k/5)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
 
+  
+predAge[k]=All_Season_Stats$Age[floor(k/5)+1]+1##The max age plus one is the predicted age
+  
+  
+  
 Age[k]=All_Season_Stats$Age[floor(k/5)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
 Age[k+1]=All_Season_Stats$Age[floor(k/5)+1]-1
 Age[k+2]=All_Season_Stats$Age[floor(k/5)+1]-2
@@ -351,7 +356,7 @@ tail(Fouls,25)
 
 
 ```{r the data set}
-DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
+DatSet=data.frame(Name,Pos2,Age,predAge,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
 tail(DatSet,25)
 
 ```
@@ -375,15 +380,20 @@ library("ggplot2", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
 
 
 ```{r function Field Goals}
-Fun_FG=function(Age,Name){
-  if(Name=="Aaron Brooks"){
+Fun_FG=function(Age,Name){##Function takes vector of names and ages contained in DatSet
+  
+  
+  
+  Age=(which(DatSet)==Name)##ages we care about are the ones when that name played
+  Age=c(Age,max(Age)+1)##we want to predict his next year so we find his oldest age and add one
+  if(Name=="Aaron Brooks"){##Aaron brooks is default so coef is 0
     coef=0
   }else{
   
 
-    coef=as.numeric(fit1$coefficients[(which(All_Season_Stats==Name))+2])
+    coef=as.numeric(fit1$coefficients[(which(All_Season_Stats==Name))+2])##the corresponding coefficient for each player is how that player changes the graph, with 3 non name coeffiecents and one default we only have to add 2 to shift it correctly
   }
-  -1.900e+03+(-3.069e+00*Age*Age)+162.52126*Age+coef
+  pred=-1.900e+03+(-3.069e+00*Age*Age)+162.52126*Age+coef##The other coeffiecents don't change
   
 }
 ```
@@ -392,8 +402,9 @@ Fun_FG=function(Age,Name){
 
 
 ```{r install dplyr}
-##install.packages("dplyr")
-##library("dplyr", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+install.packages("dplyr")
+library("dplyr", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
 ```
+
 
 
