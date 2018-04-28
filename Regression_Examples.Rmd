@@ -242,11 +242,25 @@ tail(DefReb,25)
 ```
 
 
-```{r}
+```{r finding assist}
 
-Assist=rep(NA,length(All_Season_Stats$Player))##This will be the average assists per game in each season
+Assist=rep(NA,length(All_Season_Stats$Player))##This will be the total  assists in each season
 
 
+
+m=1
+while(m<=(5*length(All_Season_Stats$Player))){
+Assist[m]=All_Season_Stats$AST_18[floor(m/5)+1]
+Assist[m+1]=All_Season_Stats$AST_17[floor(m/5)+1]###Every 5th entry is the assist for 18, and so on
+Assist[m+2]=All_Season_Stats$AST_16[floor(m/5)+1]
+Assist[m+3]=All_Season_Stats$AST_15[floor(m/5)+1]
+Assist[m+4]=All_Season_Stats$AST_14[floor(m/5)+1]
+
+m=m+5
+
+}
+
+tail(Assist,25)
 ```
 
 ```{r}
@@ -259,10 +273,10 @@ TOV=rep(NA,length(All_Season_Stats$Player))##This will be the average turnovers 
 
 Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
 
-Points=rep(NA,length(All_Season_Stats$Player))##This will be the average points per game in each season
+##I won't be using points as we can just do 3 * 3 pointers made 2 * field goals made and 1 * free throws made
 
 
-DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls,Points)
+DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
 DatSet
 
 ```
