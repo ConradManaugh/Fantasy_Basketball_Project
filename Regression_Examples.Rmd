@@ -4,7 +4,7 @@ output: html_document
 ---
 
 ##Just going to use the data to see what different methods of forecasting look like.
-```{r}
+```{r Looking at All_Season_Stats}
 library(readr)
 All_Season_Stats=read_csv("All_Season_Stats.csv")
 
@@ -16,9 +16,32 @@ tail(All_Season_Stats,25)
 
 
 ```
-```{r}
+```{r Creating Name}
 
 Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is yearly averages per game for different stats
+
+i=1 
+
+
+while(floor(i/5)+1<=length(All_Season_Stats$Player)){###the floor(i/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+
+Name[i]=All_Season_Stats$Player[floor(i/5)+1]
+Name[i+1]=All_Season_Stats$Player[floor(i/5)+1]
+Name[i+2]=All_Season_Stats$Player[floor(i/5)+1]
+Name[i+3]=All_Season_Stats$Player[floor(i/5)+1]
+Name[i+4]=All_Season_Stats$Player[floor(i/5)+1]
+
+i=i+5
+}
+Name=as.factor(Name)
+tail(Name,25)##Now names are factors that repeat 5 times in the data set for each name
+```
+
+
+
+
+```{r}
+
 
 Pos2=rep(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
 
@@ -46,12 +69,21 @@ DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for 
 
 ##Not going to use total rebounds, as in the shiny app a user can just make OfReb and DefReb the same for this result
 
+Assist=rep(NA,length(All_Season_Stats$Player))##This will be the average assists per game in each season
+
+Steal=rep(NA,length(All_Season_Stats$Player))##This will be the average steals per game in each season
+
+Block=rep(NA,length(All_Season_Stats$Player))##This will be the average blocks per game in each season
+
+TOV=rep(NA,length(All_Season_Stats$Player))##This will be the average turnovers per game in each season
+
+Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
+
+Points=rep(NA,length(All_Season_Stats$Player))##This will be the average points per game in each season
 
 
-
-
-  
-  
+DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls,Points)
+DatSet
 
 ```
 
