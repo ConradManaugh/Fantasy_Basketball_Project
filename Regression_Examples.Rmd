@@ -3,7 +3,7 @@ title: "Regression_Ideas"
 output: html_document
 ---
 
-##Just going to use the data to see what different methods of forecasting look like.
+#Just going to use the data to see what different methods of forecasting look like.
 ```{r Looking at All_Season_Stats}
 library(readr)
 All_Season_Stats=read_csv("All_Season_Stats.csv")
@@ -113,10 +113,27 @@ tail(Year,25)
 
 ```
 
-```{r}
+```{r Finding FG}
 
 
 FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on average per game in years 2014 to 2018
+
+ii=1
+while(ii<=(5*length(All_Season_Stats$Player))){
+FG[ii]=All_Season_Stats$FG_18[floor(ii/5)+1]
+FG[ii+1]=All_Season_Stats$FG_17[floor(ii/5)+1]###Every 5th entry is the field goals for 18, and so on
+FG[ii+2]=All_Season_Stats$FG_16[floor(ii/5)+1]
+FG[ii+3]=All_Season_Stats$FG_15[floor(ii/5)+1]
+FG[ii+4]=All_Season_Stats$FG_14[floor(ii/5)+1]
+
+ii=ii+5
+}
+FG
+
+```
+
+
+```{r}
 
 #I won't be using field goals attempted
 
