@@ -176,57 +176,58 @@ All_Season_Stats=read_csv(&quot;All_Season_Stats.csv&quot;)</code></pre>
 ## #   FTA_14 &lt;int&gt;, ORB_14 &lt;int&gt;, DRB_14 &lt;int&gt;, TRB_14 &lt;int&gt;, AST_14 &lt;int&gt;,
 ## #   STL_14 &lt;int&gt;, BLK_14 &lt;int&gt;, TOV_14 &lt;int&gt;, PF_14 &lt;int&gt;, `PS/G_14` &lt;int&gt;</code></pre>
 <pre class="r"><code>##The data as it stands could be reorganized, I am going to reorgainzie it by season with an emphasys on player age,so each player will have 5 observations at max.</code></pre>
-<pre class="r"><code>Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is total yearly for different stats
+<pre class="r"><code>Name=rep(NA,6*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player and an extra for the predicted year, all data is total yearly for different stats
 
 i=1 
 
 
-while(floor(i/5)+1&lt;=length(All_Season_Stats$Player)){###the floor(i/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+while(floor(i/6)+1&lt;=length(All_Season_Stats$Player)){###the floor(i/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
 
-Name[i]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+1]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+2]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+3]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+4]=All_Season_Stats$Player[floor(i/5)+1]
-
-i=i+5
+Name[i]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+1]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+2]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+3]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+4]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+5]=All_Season_Stats$Player[floor(i/6)+1]
+i=i+6
 }
 Name=as.factor(Name)
-tail(Name,25)##Now names are factors that repeat 5 times in the data set for each name</code></pre>
-<pre><code>##  [1] Zach Collins  Zach Collins  Zach Collins  Zach Collins  Zach Collins 
-##  [6] Zach LaVine   Zach LaVine   Zach LaVine   Zach LaVine   Zach LaVine  
-## [11] Zach Randolph Zach Randolph Zach Randolph Zach Randolph Zach Randolph
-## [16] Zaza Pachulia Zaza Pachulia Zaza Pachulia Zaza Pachulia Zaza Pachulia
+tail(Name,25)##Now names are factors that repeat 6 times in the data set for each name</code></pre>
+<pre><code>##  [1] Zach Collins  Zach LaVine   Zach LaVine   Zach LaVine   Zach LaVine  
+##  [6] Zach LaVine   Zach LaVine   Zach Randolph Zach Randolph Zach Randolph
+## [11] Zach Randolph Zach Randolph Zach Randolph Zaza Pachulia Zaza Pachulia
+## [16] Zaza Pachulia Zaza Pachulia Zaza Pachulia Zaza Pachulia Zhou Qi      
 ## [21] Zhou Qi       Zhou Qi       Zhou Qi       Zhou Qi       Zhou Qi      
 ## 540 Levels: Aaron Brooks Aaron Gordon Aaron Harrison ... Zhou Qi</code></pre>
-<pre class="r"><code>Pos2=rep(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
+<pre class="r"><code>Pos2=rep(NA,6*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
 
 
 
-##Since my goal for this is the same as with name, to repeat the position 5 times, i will re use my old loop.
+##Since my goal for this is the same as with name, to repeat the position 6 times, i will re use my old loop.
 
 j=1 
 
 
-while(floor(j/5)+1&lt;=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+while(floor(j/6)+1&lt;=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first position for the first 6 entries and the second position for the next 6 entries
 
-Pos2[j]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+1]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+2]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+3]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+4]=All_Season_Stats$Pos[floor(j/5)+1]
+Pos2[j]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+1]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+2]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+3]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+4]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+5]=All_Season_Stats$Pos[floor(j/6)+1]
 
-j=j+5
+j=j+6
 }
 Pos2=as.factor(Pos2)
 tail(Pos2,25)##Now Pos2 is a vector of positions as factors</code></pre>
-<pre><code>##  [1] C  C  C  C  C  SG SG SG SG SG PF PF PF PF PF C  C  C  C  C  C  C  C 
+<pre><code>##  [1] C  SG SG SG SG SG SG PF PF PF PF PF PF C  C  C  C  C  C  C  C  C  C 
 ## [24] C  C 
 ## Levels: C PF PG PG-SG SF SF-SG SG</code></pre>
-<pre class="r"><code>Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
+<pre class="r"><code>Age=rep(NA,6*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
 
 
-predAge=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a variable of the age that he will be predicing
+
 
 
 
@@ -234,288 +235,291 @@ predAge=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a vari
 k=1 
 
 
-while(floor(k/5)+1&lt;=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+while(floor(k/6)+1&lt;=length(All_Season_Stats$Pos)){###the floor(j/6)+1 always rounds to the first name for the first 6 entries and the second name for the next 6 entries
 
   
-predAge[k]=All_Season_Stats$Age[floor(k/5)+1]+1##The max age plus one is the predicted age
-  
-  
-  
-Age[k]=All_Season_Stats$Age[floor(k/5)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
-Age[k+1]=All_Season_Stats$Age[floor(k/5)+1]-1
-Age[k+2]=All_Season_Stats$Age[floor(k/5)+1]-2
-Age[k+3]=All_Season_Stats$Age[floor(k/5)+1]-3
-Age[k+4]=All_Season_Stats$Age[floor(k/5)+1]-4
 
-k=k+5
+  
+  
+Age[k]=All_Season_Stats$Age[floor(k/6)+1]+1##Predicted age is one more then age in 2018
+Age[k+1]=All_Season_Stats$Age[floor(k/6)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
+Age[k+2]=All_Season_Stats$Age[floor(k/6)+1]-1
+Age[k+3]=All_Season_Stats$Age[floor(k/6)+1]-2
+Age[k+4]=All_Season_Stats$Age[floor(k/6)+1]-3
+Age[k+5]=All_Season_Stats$Age[floor(k/6)+1]-4
+
+
+k=k+6
 }
 tail(Age,25)</code></pre>
-<pre><code>##  [1] 20 19 18 17 16 22 21 20 19 18 36 35 34 33 32 33 32 31 30 29 22 21 20
+<pre><code>##  [1] 16 23 22 21 20 19 18 37 36 35 34 33 32 34 33 32 31 30 29 23 22 21 20
 ## [24] 19 18</code></pre>
 <pre class="r"><code>##Tm I am not going to use for anaylsys
 
 #I won't be using games played, games started, or minutes played in the analysis
 
-Year=rep(NA,5*length(All_Season_Stats$Player))##This will contain years 2018 through 2014
+Year=rep(NA,6*length(All_Season_Stats$Player))##This will contain years 2019 through 2014
 
-y=c(2018,2017,2016,2015,2014)
+y=c(2019,2018,2017,2016,2015,2014)
 Year=rep(y,length(All_Season_Stats$Player))
 
 tail(Year,25)</code></pre>
-<pre><code>##  [1] 2018 2017 2016 2015 2014 2018 2017 2016 2015 2014 2018 2017 2016 2015
-## [15] 2014 2018 2017 2016 2015 2014 2018 2017 2016 2015 2014</code></pre>
-<pre class="r"><code>FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
+<pre><code>##  [1] 2014 2019 2018 2017 2016 2015 2014 2019 2018 2017 2016 2015 2014 2019
+## [15] 2018 2017 2016 2015 2014 2019 2018 2017 2016 2015 2014</code></pre>
+<pre class="r"><code>FG=rep(NA,6*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
 
-ii=1
-while(ii&lt;=(5*length(All_Season_Stats$Player))){
-FG[ii]=All_Season_Stats$FG_18[floor(ii/5)+1]
-FG[ii+1]=All_Season_Stats$FG_17[floor(ii/5)+1]###Every 5th entry is the field goals for 18, and so on
-FG[ii+2]=All_Season_Stats$FG_16[floor(ii/5)+1]
-FG[ii+3]=All_Season_Stats$FG_15[floor(ii/5)+1]
-FG[ii+4]=All_Season_Stats$FG_14[floor(ii/5)+1]
+ii=2###Start at 2 because first entry for each player is year 2019 nobody has made any FG
+while(ii&lt;=(6*length(All_Season_Stats$Player))){
+  
+##First entry stays NA each time
+FG[ii]=All_Season_Stats$FG_18[floor(ii/6)+1]
+FG[ii+1]=All_Season_Stats$FG_17[floor(ii/6)+1]###Every 5th entry is the field goals for 18, and so on
+FG[ii+2]=All_Season_Stats$FG_16[floor(ii/6)+1]
+FG[ii+3]=All_Season_Stats$FG_15[floor(ii/6)+1]
+FG[ii+4]=All_Season_Stats$FG_14[floor(ii/6)+1]
 
-ii=ii+5
+ii=ii+6
 }
 tail(FG,25)</code></pre>
-<pre><code>##  [1] 115  NA  NA  NA  NA 136 326 433 286  NA 361 433 431 454 560 149 164
-## [18] 219 240 149   6  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA 136 326 433 286  NA  NA 361 433 431 454 560  NA 149 164 219
+## [18] 240 149  NA   6  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>#I won't be using field goals attempted
 
-Bhind_Arc=rep(NA,5*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
+Bhind_Arc=rep(NA,6*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
 
-jj=1
-while(jj&lt;=(5*length(All_Season_Stats$Player))){
-Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/5)+1]
-Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the 3 points made for 18, and so on
-Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/5)+1]
-Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/5)+1]
-Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/5)+1]
+jj=2
+while(jj&lt;=(6*length(All_Season_Stats$Player))){
+Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/6)+1]
+Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/6)+1]###Every 5th entry is the 3 points made for 18, and so on
+Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/6)+1]
+Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/6)+1]
+Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/6)+1]
 
-jj=jj+5
+jj=jj+6
 }
 tail(Bhind_Arc,25)</code></pre>
-<pre><code>##  [1]  35.000      NA      NA      NA      NA  42.000 120.000   0.452
-##  [9]  57.000      NA  51.000  21.000   0.475   7.000   2.000   0.000
-## [17]   0.000   0.466   0.000   0.000   2.000      NA      NA      NA
+<pre><code>##  [1]      NA      NA  42.000 120.000   0.452  57.000      NA      NA
+##  [9]  51.000  21.000   0.475   7.000   2.000      NA   0.000   0.000
+## [17]   0.466   0.000   0.000      NA   2.000      NA      NA      NA
 ## [25]      NA</code></pre>
 <pre class="r"><code>In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made total throughout the years
 
 
 
-l=1
-while(l&lt;=(5*length(All_Season_Stats$Player))){
-In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/5)+1]
-In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/5)+1]###Every 5th entry is the 2 points made for 18, and so on
-In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/5)+1]
-In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/5)+1]
-In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/5)+1]
+l=2
+while(l&lt;=(6*length(All_Season_Stats$Player))){
+In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/6)+1]
+In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/6)+1]###Every 5th entry is the 2 points made for 18, and so on
+In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/6)+1]
+In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/6)+1]
+In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/6)+1]
 
-l=l+5
+l=l+6
 }
 tail(In_Arc,25)</code></pre>
-<pre><code>##  [1]  80.000      NA      NA      NA      NA  94.000 206.000   0.389
-##  [9] 229.000      NA 310.000 412.000   0.231 447.000 558.000 149.000
-## [17] 164.000   0.000 240.000 149.000   4.000      NA      NA      NA
+<pre><code>##  [1]      NA      NA  94.000 206.000   0.389 229.000      NA      NA
+##  [9] 310.000 412.000   0.231 447.000 558.000      NA 149.000 164.000
+## [17]   0.000 240.000 149.000      NA   4.000      NA      NA      NA
 ## [25]      NA</code></pre>
 <pre class="r"><code>FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made total throughout the years
 
-ll=1
-while(ll&lt;=(5*length(All_Season_Stats$Player))){
-FreeT[ll]=All_Season_Stats$FT_18[floor(ll/5)+1]
-FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/5)+1]###Every 5th entry is the free throw made for 18, and so on
-FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/5)+1]
-FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/5)+1]
-FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/5)+1]
+ll=2
+while(ll&lt;=(6*length(All_Season_Stats$Player))){
+FreeT[ll]=All_Season_Stats$FT_18[floor(ll/6)+1]
+FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/6)+1]###Every 5th entry is the free throw made for 18, and so on
+FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/6)+1]
+FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/6)+1]
+FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/6)+1]
 
-ll=ll+5
+ll=ll+6
 }
 tail(FreeT,25)</code></pre>
-<pre><code>##  [1]  27.000      NA      NA      NA      NA  87.000 117.000   0.482
-##  [9] 149.000      NA  84.000 141.000   0.482 228.000 250.000  75.000
-## [17]  98.000   0.469 126.000 110.000   8.000      NA      NA      NA
+<pre><code>##  [1]      NA      NA  87.000 117.000   0.482 149.000      NA      NA
+##  [9]  84.000 141.000   0.482 228.000 250.000      NA  75.000  98.000
+## [17]   0.469 126.000 110.000      NA   8.000      NA      NA      NA
 ## [25]      NA</code></pre>
 <pre class="r"><code>OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made total thruoghout the seasons
 
 
 
-w=1
-while(w&lt;=(5*length(All_Season_Stats$Player))){
-OfReb[w]=All_Season_Stats$ORB_18[floor(w/5)+1]
-OfReb[w+1]=All_Season_Stats$ORB_17[floor(w/5)+1]###Every 5th entry is the offreb for 18, and so on
-OfReb[w+2]=All_Season_Stats$ORB_16[floor(w/5)+1]
-OfReb[w+3]=All_Season_Stats$ORB_15[floor(w/5)+1]
-OfReb[w+4]=All_Season_Stats$ORB_14[floor(w/5)+1]
+w=2
+while(w&lt;=(6*length(All_Season_Stats$Player))){
+OfReb[w]=All_Season_Stats$ORB_18[floor(w/6)+1]
+OfReb[w+1]=All_Season_Stats$ORB_17[floor(w/6)+1]###Every 5th entry is the offreb for 18, and so on
+OfReb[w+2]=All_Season_Stats$ORB_16[floor(w/6)+1]
+OfReb[w+3]=All_Season_Stats$ORB_15[floor(w/6)+1]
+OfReb[w+4]=All_Season_Stats$ORB_14[floor(w/6)+1]
 
-w=w+5
+w=w+6
 
 }
 tail(OfReb,25)</code></pre>
-<pre><code>##  [1]  45  NA  NA  NA  NA   9  19 203  27  NA  97 182 216 225 265  89 140
-## [18] 276 197 141   6  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA   9  19 203  27  NA  NA  97 182 216 225 265  NA  89 140 276
+## [18] 197 141  NA   6  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for defensive rebounds
 
 
 
-ww=1
-while(ww&lt;=(5*length(All_Season_Stats$Player))){
-DefReb[ww]=All_Season_Stats$DRB_18[floor(ww/5)+1]
-DefReb[ww+1]=All_Season_Stats$DRB_17[floor(ww/5)+1]###Every 5th entry is the defreb for 18, and so on
-DefReb[ww+2]=All_Season_Stats$DRB_16[floor(ww/5)+1]
-DefReb[ww+3]=All_Season_Stats$DRB_15[floor(ww/5)+1]
-DefReb[ww+4]=All_Season_Stats$DRB_14[floor(ww/5)+1]
+ww=2
+while(ww&lt;=(6*length(All_Season_Stats$Player))){
+DefReb[ww]=All_Season_Stats$DRB_18[floor(ww/6)+1]
+DefReb[ww+1]=All_Season_Stats$DRB_17[floor(ww/6)+1]###Every 5th entry is the defreb for 18, and so on
+DefReb[ww+2]=All_Season_Stats$DRB_16[floor(ww/6)+1]
+DefReb[ww+3]=All_Season_Stats$DRB_15[floor(ww/6)+1]
+DefReb[ww+4]=All_Season_Stats$DRB_14[floor(ww/6)+1]
 
-ww=ww+5
+ww=ww+6
 
 }
 tail(DefReb,25)</code></pre>
-<pre><code>##  [1] 176.000      NA      NA      NA      NA  85.000 141.000   0.793
-##  [9] 187.000      NA 300.000 416.000   0.796 522.000 530.000 232.000
-## [17] 270.000   0.768 303.000 192.000  16.000      NA      NA      NA
+<pre><code>##  [1]      NA      NA  85.000 141.000   0.793 187.000      NA      NA
+##  [9] 300.000 416.000   0.796 522.000 530.000      NA 232.000 270.000
+## [17]   0.768 303.000 192.000      NA  16.000      NA      NA      NA
 ## [25]      NA</code></pre>
 <pre class="r"><code>##Not going to use total rebounds, as in the shiny app a user can just make OfReb and DefReb the same for this result</code></pre>
 <pre class="r"><code>Assist=rep(NA,length(All_Season_Stats$Player))##This will be the total  assists in each season
 
 
 
-m=1
-while(m&lt;=(5*length(All_Season_Stats$Player))){
-Assist[m]=All_Season_Stats$AST_18[floor(m/5)+1]
-Assist[m+1]=All_Season_Stats$AST_17[floor(m/5)+1]###Every 5th entry is the assist for 18, and so on
-Assist[m+2]=All_Season_Stats$AST_16[floor(m/5)+1]
-Assist[m+3]=All_Season_Stats$AST_15[floor(m/5)+1]
-Assist[m+4]=All_Season_Stats$AST_14[floor(m/5)+1]
+m=2
+while(m&lt;=(6*length(All_Season_Stats$Player))){
+Assist[m]=All_Season_Stats$AST_18[floor(m/6)+1]
+Assist[m+1]=All_Season_Stats$AST_17[floor(m/6)+1]###Every 5th entry is the assist for 18, and so on
+Assist[m+2]=All_Season_Stats$AST_16[floor(m/6)+1]
+Assist[m+3]=All_Season_Stats$AST_15[floor(m/6)+1]
+Assist[m+4]=All_Season_Stats$AST_14[floor(m/6)+1]
 
-m=m+5
+m=m+6
 
 }
 
 tail(Assist,25)</code></pre>
-<pre><code>##  [1]  52  NA  NA  NA  NA  72 139 201 276  NA 127 122 350 153 200 109 132
-## [18] 469 178 136   2  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA  72 139 201 276  NA  NA 127 122 350 153 200  NA 109 132 469
+## [18] 178 136  NA   2  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>Steal=rep(NA,length(All_Season_Stats$Player))##This will be the total steals in each season
 
-mm=1
-while(mm&lt;=(5*length(All_Season_Stats$Player))){
-Steal[mm]=All_Season_Stats$STL_18[floor(mm/5)+1]
-Steal[mm+1]=All_Season_Stats$STL_17[floor(mm/5)+1]###Every 5th entry is the steal for 18, and so on
-Steal[mm+2]=All_Season_Stats$STL_16[floor(mm/5)+1]
-Steal[mm+3]=All_Season_Stats$STL_15[floor(mm/5)+1]
-Steal[mm+4]=All_Season_Stats$STL_14[floor(mm/5)+1]
+mm=2
+while(mm&lt;=(6*length(All_Season_Stats$Player))){
+Steal[mm]=All_Season_Stats$STL_18[floor(mm/6)+1]
+Steal[mm+1]=All_Season_Stats$STL_17[floor(mm/6)+1]###Every 5th entry is the steal for 18, and so on
+Steal[mm+2]=All_Season_Stats$STL_16[floor(mm/6)+1]
+Steal[mm+3]=All_Season_Stats$STL_15[floor(mm/6)+1]
+Steal[mm+4]=All_Season_Stats$STL_14[floor(mm/6)+1]
 
-mm=mm+5
+mm=mm+6
 
 }
 tail(Steal,25)</code></pre>
-<pre><code>##  [1]  17  NA  NA  NA  NA  24  41 228  54  NA  42  38 529  69  54  38  59
-## [18] 718  80  45   2  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA  24  41 228  54  NA  NA  42  38 529  69  54  NA  38  59 718
+## [18]  80  45  NA   2  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>Block=rep(NA,length(All_Season_Stats$Player))##This will be the total blocks in each season
 
 
-q=1
-while(q&lt;=(5*length(All_Season_Stats$Player))){
-Block[q]=All_Season_Stats$BLK_18[floor(q/5)+1]
-Block[q+1]=All_Season_Stats$BLK_17[floor(q/5)+1]###Every 5th entry is the block for 18, and so on
-Block[q+2]=All_Season_Stats$BLK_16[floor(q/5)+1]
-Block[q+3]=All_Season_Stats$BLK_15[floor(q/5)+1]
-Block[q+4]=All_Season_Stats$BLK_14[floor(q/5)+1]
+q=2
+while(q&lt;=(6*length(All_Season_Stats$Player))){
+Block[q]=All_Season_Stats$BLK_18[floor(q/6)+1]
+Block[q+1]=All_Season_Stats$BLK_17[floor(q/6)+1]###Every 5th entry is the block for 18, and so on
+Block[q+2]=All_Season_Stats$BLK_16[floor(q/6)+1]
+Block[q+3]=All_Season_Stats$BLK_15[floor(q/6)+1]
+Block[q+4]=All_Season_Stats$BLK_14[floor(q/6)+1]
 
-q=q+5
+q=q+6
 
 }
 tail(Block,25)</code></pre>
-<pre><code>##  [1]  31  NA  NA  NA  NA   4  10 251  10  NA  10  10 142  14  23  17  33
-## [18] 128  21  14  14  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA   4  10 251  10  NA  NA  10  10 142  14  23  NA  17  33 128
+## [18]  21  14  NA  14  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>TOV=rep(NA,length(All_Season_Stats$Player))##This will be the total turnovers per game in each season
 
 
-qq=1
-while(qq&lt;=(5*length(All_Season_Stats$Player))){
-TOV[qq]=All_Season_Stats$TOV_18[floor(qq/5)+1]
-TOV[qq+1]=All_Season_Stats$TOV_17[floor(qq/5)+1]###Every 5th entry is the turnover for 18, and so on
-TOV[qq+2]=All_Season_Stats$TOV_16[floor(qq/5)+1]
-TOV[qq+3]=All_Season_Stats$TOV_15[floor(qq/5)+1]
-TOV[qq+4]=All_Season_Stats$TOV_14[floor(qq/5)+1]
+qq=2
+while(qq&lt;=(6*length(All_Season_Stats$Player))){
+TOV[qq]=All_Season_Stats$TOV_18[floor(qq/6)+1]
+TOV[qq+1]=All_Season_Stats$TOV_17[floor(qq/6)+1]###Every 5th entry is the turnover for 18, and so on
+TOV[qq+2]=All_Season_Stats$TOV_16[floor(qq/6)+1]
+TOV[qq+3]=All_Season_Stats$TOV_15[floor(qq/6)+1]
+TOV[qq+4]=All_Season_Stats$TOV_14[floor(qq/6)+1]
 
-qq=qq+5
+qq=qq+6
 
 }
 
 
 tail(TOV,25)</code></pre>
-<pre><code>##  [1]  58  NA  NA  NA  NA  43  85  69 193  NA 116  99  43 156 183  72  87
-## [18]  64 133  92  10  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA  43  85  69 193  NA  NA 116  99  43 156 183  NA  72  87  64
+## [18] 133  92  NA  10  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
 
 
-s=1
-while(s&lt;=(5*length(All_Season_Stats$Player))){
-Fouls[s]=All_Season_Stats$PF_18[floor(s/5)+1]
-Fouls[s+1]=All_Season_Stats$PF_17[floor(s/5)+1]###Every 5th entry is the turnover for 18, and so on
-Fouls[s+2]=All_Season_Stats$PF_16[floor(s/5)+1]
-Fouls[s+3]=All_Season_Stats$PF_15[floor(s/5)+1]
-Fouls[s+4]=All_Season_Stats$PF_14[floor(s/5)+1]
+s=2
+while(s&lt;=(6*length(All_Season_Stats$Player))){
+Fouls[s]=All_Season_Stats$PF_18[floor(s/6)+1]
+Fouls[s+1]=All_Season_Stats$PF_17[floor(s/6)+1]###Every 5th entry is the turnover for 18, and so on
+Fouls[s+2]=All_Season_Stats$PF_16[floor(s/6)+1]
+Fouls[s+3]=All_Season_Stats$PF_15[floor(s/6)+1]
+Fouls[s+4]=All_Season_Stats$PF_14[floor(s/6)+1]
 
-s=s+5
+s=s+6
 
 }
 tail(Fouls,25)</code></pre>
-<pre><code>##  [1] 133  NA  NA  NA  NA  55 104  17 158  NA 119 136  13 175 210 122 166
-## [18]  22 170 124  14  NA  NA  NA  NA</code></pre>
+<pre><code>##  [1]  NA  NA  55 104  17 158  NA  NA 119 136  13 175 210  NA 122 166  22
+## [18] 170 124  NA  14  NA  NA  NA  NA</code></pre>
 <pre class="r"><code>##I won't be using points as we can just do 3 * 3 pointers made 2 * field goals made and 1 * free throws made</code></pre>
-<pre class="r"><code>DatSet=data.frame(Name,Pos2,Age,predAge,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
+<pre class="r"><code>DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
 tail(DatSet,25)</code></pre>
-<pre><code>##               Name Pos2 Age predAge Year  FG Bhind_Arc  In_Arc   FreeT
-## 2676  Zach Collins    C  20      21 2018 115    35.000  80.000  27.000
-## 2677  Zach Collins    C  19      NA 2017  NA        NA      NA      NA
-## 2678  Zach Collins    C  18      NA 2016  NA        NA      NA      NA
-## 2679  Zach Collins    C  17      NA 2015  NA        NA      NA      NA
-## 2680  Zach Collins    C  16      NA 2014  NA        NA      NA      NA
-## 2681   Zach LaVine   SG  22      23 2018 136    42.000  94.000  87.000
-## 2682   Zach LaVine   SG  21      NA 2017 326   120.000 206.000 117.000
-## 2683   Zach LaVine   SG  20      NA 2016 433     0.452   0.389   0.482
-## 2684   Zach LaVine   SG  19      NA 2015 286    57.000 229.000 149.000
-## 2685   Zach LaVine   SG  18      NA 2014  NA        NA      NA      NA
-## 2686 Zach Randolph   PF  36      37 2018 361    51.000 310.000  84.000
-## 2687 Zach Randolph   PF  35      NA 2017 433    21.000 412.000 141.000
-## 2688 Zach Randolph   PF  34      NA 2016 431     0.475   0.231   0.482
-## 2689 Zach Randolph   PF  33      NA 2015 454     7.000 447.000 228.000
-## 2690 Zach Randolph   PF  32      NA 2014 560     2.000 558.000 250.000
-## 2691 Zaza Pachulia    C  33      34 2018 149     0.000 149.000  75.000
-## 2692 Zaza Pachulia    C  32      NA 2017 164     0.000 164.000  98.000
-## 2693 Zaza Pachulia    C  31      NA 2016 219     0.466   0.000   0.469
-## 2694 Zaza Pachulia    C  30      NA 2015 240     0.000 240.000 126.000
-## 2695 Zaza Pachulia    C  29      NA 2014 149     0.000 149.000 110.000
-## 2696       Zhou Qi    C  22      23 2018   6     2.000   4.000   8.000
-## 2697       Zhou Qi    C  21      NA 2017  NA        NA      NA      NA
-## 2698       Zhou Qi    C  20      NA 2016  NA        NA      NA      NA
-## 2699       Zhou Qi    C  19      NA 2015  NA        NA      NA      NA
-## 2700       Zhou Qi    C  18      NA 2014  NA        NA      NA      NA
-##      OfReb  DefReb Assist Steal Block TOV Fouls
-## 2676    45 176.000     52    17    31  58   133
-## 2677    NA      NA     NA    NA    NA  NA    NA
-## 2678    NA      NA     NA    NA    NA  NA    NA
-## 2679    NA      NA     NA    NA    NA  NA    NA
-## 2680    NA      NA     NA    NA    NA  NA    NA
-## 2681     9  85.000     72    24     4  43    55
-## 2682    19 141.000    139    41    10  85   104
-## 2683   203   0.793    201   228   251  69    17
-## 2684    27 187.000    276    54    10 193   158
-## 2685    NA      NA     NA    NA    NA  NA    NA
-## 2686    97 300.000    127    42    10 116   119
-## 2687   182 416.000    122    38    10  99   136
-## 2688   216   0.796    350   529   142  43    13
-## 2689   225 522.000    153    69    14 156   175
-## 2690   265 530.000    200    54    23 183   210
-## 2691    89 232.000    109    38    17  72   122
-## 2692   140 270.000    132    59    33  87   166
-## 2693   276   0.768    469   718   128  64    22
-## 2694   197 303.000    178    80    21 133   170
-## 2695   141 192.000    136    45    14  92   124
-## 2696     6  16.000      2     2    14  10    14
-## 2697    NA      NA     NA    NA    NA  NA    NA
-## 2698    NA      NA     NA    NA    NA  NA    NA
-## 2699    NA      NA     NA    NA    NA  NA    NA
-## 2700    NA      NA     NA    NA    NA  NA    NA</code></pre>
+<pre><code>##               Name Pos2 Age Year  FG Bhind_Arc  In_Arc   FreeT OfReb
+## 3216  Zach Collins    C  16 2014  NA        NA      NA      NA    NA
+## 3217   Zach LaVine   SG  23 2019  NA        NA      NA      NA    NA
+## 3218   Zach LaVine   SG  22 2018 136    42.000  94.000  87.000     9
+## 3219   Zach LaVine   SG  21 2017 326   120.000 206.000 117.000    19
+## 3220   Zach LaVine   SG  20 2016 433     0.452   0.389   0.482   203
+## 3221   Zach LaVine   SG  19 2015 286    57.000 229.000 149.000    27
+## 3222   Zach LaVine   SG  18 2014  NA        NA      NA      NA    NA
+## 3223 Zach Randolph   PF  37 2019  NA        NA      NA      NA    NA
+## 3224 Zach Randolph   PF  36 2018 361    51.000 310.000  84.000    97
+## 3225 Zach Randolph   PF  35 2017 433    21.000 412.000 141.000   182
+## 3226 Zach Randolph   PF  34 2016 431     0.475   0.231   0.482   216
+## 3227 Zach Randolph   PF  33 2015 454     7.000 447.000 228.000   225
+## 3228 Zach Randolph   PF  32 2014 560     2.000 558.000 250.000   265
+## 3229 Zaza Pachulia    C  34 2019  NA        NA      NA      NA    NA
+## 3230 Zaza Pachulia    C  33 2018 149     0.000 149.000  75.000    89
+## 3231 Zaza Pachulia    C  32 2017 164     0.000 164.000  98.000   140
+## 3232 Zaza Pachulia    C  31 2016 219     0.466   0.000   0.469   276
+## 3233 Zaza Pachulia    C  30 2015 240     0.000 240.000 126.000   197
+## 3234 Zaza Pachulia    C  29 2014 149     0.000 149.000 110.000   141
+## 3235       Zhou Qi    C  23 2019  NA        NA      NA      NA    NA
+## 3236       Zhou Qi    C  22 2018   6     2.000   4.000   8.000     6
+## 3237       Zhou Qi    C  21 2017  NA        NA      NA      NA    NA
+## 3238       Zhou Qi    C  20 2016  NA        NA      NA      NA    NA
+## 3239       Zhou Qi    C  19 2015  NA        NA      NA      NA    NA
+## 3240       Zhou Qi    C  18 2014  NA        NA      NA      NA    NA
+##       DefReb Assist Steal Block TOV Fouls
+## 3216      NA     NA    NA    NA  NA    NA
+## 3217      NA     NA    NA    NA  NA    NA
+## 3218  85.000     72    24     4  43    55
+## 3219 141.000    139    41    10  85   104
+## 3220   0.793    201   228   251  69    17
+## 3221 187.000    276    54    10 193   158
+## 3222      NA     NA    NA    NA  NA    NA
+## 3223      NA     NA    NA    NA  NA    NA
+## 3224 300.000    127    42    10 116   119
+## 3225 416.000    122    38    10  99   136
+## 3226   0.796    350   529   142  43    13
+## 3227 522.000    153    69    14 156   175
+## 3228 530.000    200    54    23 183   210
+## 3229      NA     NA    NA    NA  NA    NA
+## 3230 232.000    109    38    17  72   122
+## 3231 270.000    132    59    33  87   166
+## 3232   0.768    469   718   128  64    22
+## 3233 303.000    178    80    21 133   170
+## 3234 192.000    136    45    14  92   124
+## 3235      NA     NA    NA    NA  NA    NA
+## 3236  16.000      2     2    14  10    14
+## 3237      NA     NA    NA    NA  NA    NA
+## 3238      NA     NA    NA    NA  NA    NA
+## 3239      NA     NA    NA    NA  NA    NA
+## 3240      NA     NA    NA    NA  NA    NA</code></pre>
 <pre class="r"><code>fit1=glm(FG~I(Age^2)+Age+Name)
 head(fit1$coefficients,5)</code></pre>
 <pre><code>##        (Intercept)           I(Age^2)                Age 
@@ -528,10 +532,7 @@ head(fit1$coefficients,5)</code></pre>
 <pre class="r"><code>library(&quot;ggplot2&quot;, lib.loc=&quot;~/R/x86_64-pc-linux-gnu-library/3.4&quot;)</code></pre>
 <pre class="r"><code>Fun_FG=function(Age,Name){##Function takes vector of names and ages contained in DatSet
   
-  
-  
-  Age=(which(DatSet)==Name)##ages we care about are the ones when that name played
-  Age=c(Age,max(Age)+1)##we want to predict his next year so we find his oldest age and add one
+ 
   if(Name==&quot;Aaron Brooks&quot;){##Aaron brooks is default so coef is 0
     coef=0
   }else{
@@ -540,8 +541,551 @@ head(fit1$coefficients,5)</code></pre>
     coef=as.numeric(fit1$coefficients[(which(All_Season_Stats==Name))+2])##the corresponding coefficient for each player is how that player changes the graph, with 3 non name coeffiecents and one default we only have to add 2 to shift it correctly
   }
   pred=-1.900e+03+(-3.069e+00*Age*Age)+162.52126*Age+coef##The other coeffiecents don't change
-  
+  pred
 }</code></pre>
+<pre class="r"><code>Fun_FG(DatSet$Age,DatSet$Name)</code></pre>
+<pre><code>## Warning in if (Name == &quot;Aaron Brooks&quot;) {: the condition has length &gt; 1 and
+## only the first element will be used</code></pre>
+<pre><code>##    [1]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+##    [7]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##   [13]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##   [19]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+##   [25]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##   [31]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##   [37]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+##   [43]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+##   [49]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##   [55]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##   [61]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##   [67]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##   [73]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##   [79]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##   [85]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##   [91]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##   [97]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [103]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [109]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [115]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [121]   28.71910   77.95884  121.06058  158.02432  188.85006  213.53780
+##  [127]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+##  [133]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [139]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+##  [145]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [151]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [157]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [163]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [169]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [175]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [181]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+##  [187]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [193]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [199]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+##  [205]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+##  [211]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [217]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##  [223]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [229]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [235]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [241]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [247]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [253]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [259]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [265]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+##  [271]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [277]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [283]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [289]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [295]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [301]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [307]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [313]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [319]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [325]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [331]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [337]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [343]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [349]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [355]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [361]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [367]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##  [373]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [379]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [385]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [391]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+##  [397]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [403]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [409]   28.71910   77.95884  121.06058  158.02432  188.85006  213.53780
+##  [415]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [421]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [427]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [433]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [439]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [445]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+##  [451]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [457]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [463]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [469]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+##  [475]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [481]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+##  [487]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [493]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [499]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [505]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [511]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [517]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [523]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##  [529] -229.61986 -155.82812  -88.17438  -26.65864   28.71910   77.95884
+##  [535]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [541]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [547]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [553]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [559]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [565]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [571]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [577]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [583]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [589]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [595]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##  [601]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [607]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [613]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [619]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [625]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [631] -155.82812  -88.17438  -26.65864   28.71910   77.95884  121.06058
+##  [637]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [643]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [649]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [655]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [661]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [667]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [673]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [679]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [685]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [691]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##  [697]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+##  [703]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [709]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [715]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [721]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [727]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [733]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [739]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [745]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [751]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [757]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [763]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [769]   28.71910   77.95884  121.06058  158.02432  188.85006  213.53780
+##  [775]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [781]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [787]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [793]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [799]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [805] -309.54960 -229.61986 -155.82812  -88.17438  -26.65864   28.71910
+##  [811]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [817]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [823]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [829]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [835]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [841]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+##  [847]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [853]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [859]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+##  [865]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [871]  -88.17438  -26.65864   28.71910   77.95884  121.06058  158.02432
+##  [877]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [883]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [889]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+##  [895]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [901]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [907]  -26.65864   28.71910   77.95884  121.06058  158.02432  188.85006
+##  [913]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+##  [919]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [925]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+##  [931]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [937]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+##  [943]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [949]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+##  [955]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+##  [961]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+##  [967]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+##  [973]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [979]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+##  [985]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+##  [991]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+##  [997]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1003]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1009]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1015]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1021]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1027]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1033]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [1039]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1045]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1051]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1057]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1063]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1069]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1075]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1081]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1087]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1093]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1099]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [1105]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1111]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1117]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+## [1123]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1129]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1135]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1141]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1147]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1153]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1159]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1165]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1171]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1177]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [1183]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [1189]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [1195]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1201]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1207]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1213]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1219]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1225]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1231]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1237]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1243]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1249]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1255]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1261] -155.82812  -88.17438  -26.65864   28.71910   77.95884  121.06058
+## [1267]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1273]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1279]  -26.65864   28.71910   77.95884  121.06058  158.02432  188.85006
+## [1285]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1291]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1297]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1303]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1309]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1315]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1321]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1327]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1333]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1339]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [1345]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1351]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1357]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+## [1363]   28.71910   77.95884  121.06058  158.02432  188.85006  213.53780
+## [1369]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1375] -395.61734 -309.54960 -229.61986 -155.82812  -88.17438  -26.65864
+## [1381]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1387]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [1393]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [1399]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1405]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+## [1411]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1417]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1423]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1429]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1435]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1441]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1447]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1453]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1459]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1465]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1471]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [1477]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1483]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1489]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1495]  -88.17438  -26.65864   28.71910   77.95884  121.06058  158.02432
+## [1501]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1507]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1513]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1519]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1525]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1531]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1537]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1543]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1549]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1555]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1561]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1567]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1573]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1579]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1585]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1591]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1597]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1603]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1609]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1615]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1621]  -88.17438  -26.65864   28.71910   77.95884  121.06058  158.02432
+## [1627]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1633]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1639]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1645]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1651]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1657]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [1663]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1669]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [1675]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1681]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1687]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1693]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1699]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1705]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1711]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1717]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1723]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [1729]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1735]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1741]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1747]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1753]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1759]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1765]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1771]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1777]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [1783]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1789]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1795]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1801]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1807]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1813]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [1819]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1825]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1831]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1837]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1843]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [1849]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1855]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1861]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1867]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1873]  -88.17438  -26.65864   28.71910   77.95884  121.06058  158.02432
+## [1879]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [1885]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1891]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1897]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1903]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1909]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [1915]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1921]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [1927]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [1933]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1939]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1945]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1951]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [1957]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [1963]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [1969]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [1975]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1981]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [1987]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [1993]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [1999]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2005]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2011]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2017]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2023]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2029]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2035]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2041]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2047]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2053]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+## [2059]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2065] -395.61734 -309.54960 -229.61986 -155.82812  -88.17438  -26.65864
+## [2071]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [2077]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [2083]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2089]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2095]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2101]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2107]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2113]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2119]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2125]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2131]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+## [2137]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2143]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [2149]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2155]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [2161]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2167]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2173]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2179]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2185]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2191]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2197]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2203]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2209]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2215]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2221]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2227]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2233]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2239]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [2245]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2251]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2257]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2263]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2269]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [2275]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2281]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2287]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2293]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2299]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2305]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2311]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2317]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2323]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2329]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2335]  -26.65864   28.71910   77.95884  121.06058  158.02432  188.85006
+## [2341]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2347] -155.82812  -88.17438  -26.65864   28.71910   77.95884  121.06058
+## [2353]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2359]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2365]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2371]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2377]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2383]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2389]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2395]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2401]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2407]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2413]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [2419]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2425]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2431]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2437]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2443]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2449]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2455]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2461]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2467]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2473]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2479]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2485]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2491] -155.82812  -88.17438  -26.65864   28.71910   77.95884  121.06058
+## [2497]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2503]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2509]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2515]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2521]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2527]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2533]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2539]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2545]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2551]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2557]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2563]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2569]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [2575]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2581]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2587]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2593] -155.82812  -88.17438  -26.65864   28.71910   77.95884  121.06058
+## [2599]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2605]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2611]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2617]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2623]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2629]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2635]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2641]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2647]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2653]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2659]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2665]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2671]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2677]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2683]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2689]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2695]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2701]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2707]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2713]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2719]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [2725]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2731]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2737]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2743]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2749]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2755]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2761]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2767]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2773]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2779]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2785]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [2791]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2797]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2803]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2809]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [2815]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2821]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2827]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2833]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2839]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2845]  122.82520   79.99494   31.02668  -24.07958  -85.32384 -152.70610
+## [2851]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2857]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2863]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [2869]  213.53780  232.08754  244.49928  250.77302  250.90876  244.90650
+## [2875]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [2881]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [2887]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2893]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2899]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [2905]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [2911]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2917]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2923]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2929]  -88.17438  -26.65864   28.71910   77.95884  121.06058  158.02432
+## [2935]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [2941]  -26.65864   28.71910   77.95884  121.06058  158.02432  188.85006
+## [2947]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [2953]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2959]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [2965]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [2971]  121.06058  158.02432  188.85006  213.53780  232.08754  244.49928
+## [2977]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [2983]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [2989]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [2995]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [3001]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [3007]  250.77302  250.90876  244.90650  232.76624  214.48798  190.07172
+## [3013]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3019]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3025]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [3031]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3037]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [3043]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [3049]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [3055]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [3061]  232.08754  244.49928  250.77302  250.90876  244.90650  232.76624
+## [3067]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3073]  -26.65864   28.71910   77.95884  121.06058  158.02432  188.85006
+## [3079]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [3085] -155.82812  -88.17438  -26.65864   28.71910   77.95884  121.06058
+## [3091]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [3097]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [3103] -487.82308 -395.61734 -309.54960 -229.61986 -155.82812  -88.17438
+## [3109]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3115]  190.07172  159.51746  122.82520   79.99494   31.02668  -24.07958
+## [3121]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [3127]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [3133]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3139]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3145]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [3151]  158.02432  188.85006  213.53780  232.08754  244.49928  250.77302
+## [3157]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [3163]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [3169]  244.49928  250.77302  250.90876  244.90650  232.76624  214.48798
+## [3175]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3181]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [3187]  250.90876  244.90650  232.76624  214.48798  190.07172  159.51746
+## [3193]  232.76624  214.48798  190.07172  159.51746  122.82520   79.99494
+## [3199]  188.85006  213.53780  232.08754  244.49928  250.77302  250.90876
+## [3205]  244.90650  232.76624  214.48798  190.07172  159.51746  122.82520
+## [3211]  159.51746  122.82520   79.99494   31.02668  -24.07958  -85.32384
+## [3217]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668
+## [3223]  -88.17438  -26.65864   28.71910   77.95884  121.06058  158.02432
+## [3229]   77.95884  121.06058  158.02432  188.85006  213.53780  232.08754
+## [3235]  214.48798  190.07172  159.51746  122.82520   79.99494   31.02668</code></pre>
 <pre class="r"><code>install.packages(&quot;dplyr&quot;)</code></pre>
 <pre><code>## Installing package into '/home/rstudio-user/R/x86_64-pc-linux-gnu-library/3.4'
 ## (as 'lib' is unspecified)</code></pre>

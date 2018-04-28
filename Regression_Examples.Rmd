@@ -18,23 +18,23 @@ tail(All_Season_Stats,25)
 ```
 ```{r Creating Name}
 
-Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player, all data is total yearly for different stats
+Name=rep(NA,6*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player and an extra for the predicted year, all data is total yearly for different stats
 
 i=1 
 
 
-while(floor(i/5)+1<=length(All_Season_Stats$Player)){###the floor(i/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+while(floor(i/6)+1<=length(All_Season_Stats$Player)){###the floor(i/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
 
-Name[i]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+1]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+2]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+3]=All_Season_Stats$Player[floor(i/5)+1]
-Name[i+4]=All_Season_Stats$Player[floor(i/5)+1]
-
-i=i+5
+Name[i]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+1]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+2]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+3]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+4]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+5]=All_Season_Stats$Player[floor(i/6)+1]
+i=i+6
 }
 Name=as.factor(Name)
-tail(Name,25)##Now names are factors that repeat 5 times in the data set for each name
+tail(Name,25)##Now names are factors that repeat 6 times in the data set for each name
 ```
 
 
@@ -43,24 +43,25 @@ tail(Name,25)##Now names are factors that repeat 5 times in the data set for eac
 ```{r Creating Position}
 
 
-Pos2=rep(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
+Pos2=rep(NA,6*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
 
 
 
-##Since my goal for this is the same as with name, to repeat the position 5 times, i will re use my old loop.
+##Since my goal for this is the same as with name, to repeat the position 6 times, i will re use my old loop.
 
 j=1 
 
 
-while(floor(j/5)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+while(floor(j/6)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first position for the first 6 entries and the second position for the next 6 entries
 
-Pos2[j]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+1]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+2]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+3]=All_Season_Stats$Pos[floor(j/5)+1]
-Pos2[j+4]=All_Season_Stats$Pos[floor(j/5)+1]
+Pos2[j]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+1]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+2]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+3]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+4]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+5]=All_Season_Stats$Pos[floor(j/6)+1]
 
-j=j+5
+j=j+6
 }
 Pos2=as.factor(Pos2)
 tail(Pos2,25)##Now Pos2 is a vector of positions as factors
@@ -71,10 +72,10 @@ tail(Pos2,25)##Now Pos2 is a vector of positions as factors
 
 
 
-Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
+Age=rep(NA,6*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
 
 
-predAge=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a variable of the age that he will be predicing
+
 
 
 
@@ -82,20 +83,21 @@ predAge=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a vari
 k=1 
 
 
-while(floor(k/5)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+while(floor(k/6)+1<=length(All_Season_Stats$Pos)){###the floor(j/6)+1 always rounds to the first name for the first 6 entries and the second name for the next 6 entries
 
   
-predAge[k]=All_Season_Stats$Age[floor(k/5)+1]+1##The max age plus one is the predicted age
-  
-  
-  
-Age[k]=All_Season_Stats$Age[floor(k/5)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
-Age[k+1]=All_Season_Stats$Age[floor(k/5)+1]-1
-Age[k+2]=All_Season_Stats$Age[floor(k/5)+1]-2
-Age[k+3]=All_Season_Stats$Age[floor(k/5)+1]-3
-Age[k+4]=All_Season_Stats$Age[floor(k/5)+1]-4
 
-k=k+5
+  
+  
+Age[k]=All_Season_Stats$Age[floor(k/6)+1]+1##Predicted age is one more then age in 2018
+Age[k+1]=All_Season_Stats$Age[floor(k/6)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
+Age[k+2]=All_Season_Stats$Age[floor(k/6)+1]-1
+Age[k+3]=All_Season_Stats$Age[floor(k/6)+1]-2
+Age[k+4]=All_Season_Stats$Age[floor(k/6)+1]-3
+Age[k+5]=All_Season_Stats$Age[floor(k/6)+1]-4
+
+
+k=k+6
 }
 tail(Age,25)
 
@@ -107,9 +109,9 @@ tail(Age,25)
 
 #I won't be using games played, games started, or minutes played in the analysis
 
-Year=rep(NA,5*length(All_Season_Stats$Player))##This will contain years 2018 through 2014
+Year=rep(NA,6*length(All_Season_Stats$Player))##This will contain years 2019 through 2014
 
-y=c(2018,2017,2016,2015,2014)
+y=c(2019,2018,2017,2016,2015,2014)
 Year=rep(y,length(All_Season_Stats$Player))
 
 tail(Year,25)
@@ -121,17 +123,19 @@ tail(Year,25)
 ```{r Finding FG}
 
 
-FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
+FG=rep(NA,6*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
 
-ii=1
-while(ii<=(5*length(All_Season_Stats$Player))){
-FG[ii]=All_Season_Stats$FG_18[floor(ii/5)+1]
-FG[ii+1]=All_Season_Stats$FG_17[floor(ii/5)+1]###Every 5th entry is the field goals for 18, and so on
-FG[ii+2]=All_Season_Stats$FG_16[floor(ii/5)+1]
-FG[ii+3]=All_Season_Stats$FG_15[floor(ii/5)+1]
-FG[ii+4]=All_Season_Stats$FG_14[floor(ii/5)+1]
+ii=2###Start at 2 because first entry for each player is year 2019 nobody has made any FG
+while(ii<=(6*length(All_Season_Stats$Player))){
+  
+##First entry stays NA each time
+FG[ii]=All_Season_Stats$FG_18[floor(ii/6)+1]
+FG[ii+1]=All_Season_Stats$FG_17[floor(ii/6)+1]###Every 5th entry is the field goals for 18, and so on
+FG[ii+2]=All_Season_Stats$FG_16[floor(ii/6)+1]
+FG[ii+3]=All_Season_Stats$FG_15[floor(ii/6)+1]
+FG[ii+4]=All_Season_Stats$FG_14[floor(ii/6)+1]
 
-ii=ii+5
+ii=ii+6
 }
 tail(FG,25)
 
@@ -142,17 +146,17 @@ tail(FG,25)
 
 #I won't be using field goals attempted
 
-Bhind_Arc=rep(NA,5*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
+Bhind_Arc=rep(NA,6*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
 
-jj=1
-while(jj<=(5*length(All_Season_Stats$Player))){
-Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/5)+1]
-Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the 3 points made for 18, and so on
-Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/5)+1]
-Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/5)+1]
-Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/5)+1]
+jj=2
+while(jj<=(6*length(All_Season_Stats$Player))){
+Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/6)+1]
+Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/6)+1]###Every 5th entry is the 3 points made for 18, and so on
+Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/6)+1]
+Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/6)+1]
+Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/6)+1]
 
-jj=jj+5
+jj=jj+6
 }
 tail(Bhind_Arc,25)
 
@@ -166,15 +170,15 @@ In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field g
 
 
 
-l=1
-while(l<=(5*length(All_Season_Stats$Player))){
-In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/5)+1]
-In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/5)+1]###Every 5th entry is the 2 points made for 18, and so on
-In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/5)+1]
-In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/5)+1]
-In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/5)+1]
+l=2
+while(l<=(6*length(All_Season_Stats$Player))){
+In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/6)+1]
+In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/6)+1]###Every 5th entry is the 2 points made for 18, and so on
+In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/6)+1]
+In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/6)+1]
+In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/6)+1]
 
-l=l+5
+l=l+6
 }
 tail(In_Arc,25)
 
@@ -184,15 +188,15 @@ tail(In_Arc,25)
 ```{r finding FreeT}
 FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made total throughout the years
 
-ll=1
-while(ll<=(5*length(All_Season_Stats$Player))){
-FreeT[ll]=All_Season_Stats$FT_18[floor(ll/5)+1]
-FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/5)+1]###Every 5th entry is the free throw made for 18, and so on
-FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/5)+1]
-FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/5)+1]
-FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/5)+1]
+ll=2
+while(ll<=(6*length(All_Season_Stats$Player))){
+FreeT[ll]=All_Season_Stats$FT_18[floor(ll/6)+1]
+FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/6)+1]###Every 5th entry is the free throw made for 18, and so on
+FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/6)+1]
+FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/6)+1]
+FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/6)+1]
 
-ll=ll+5
+ll=ll+6
 }
 tail(FreeT,25)
 
@@ -204,15 +208,15 @@ OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebou
 
 
 
-w=1
-while(w<=(5*length(All_Season_Stats$Player))){
-OfReb[w]=All_Season_Stats$ORB_18[floor(w/5)+1]
-OfReb[w+1]=All_Season_Stats$ORB_17[floor(w/5)+1]###Every 5th entry is the offreb for 18, and so on
-OfReb[w+2]=All_Season_Stats$ORB_16[floor(w/5)+1]
-OfReb[w+3]=All_Season_Stats$ORB_15[floor(w/5)+1]
-OfReb[w+4]=All_Season_Stats$ORB_14[floor(w/5)+1]
+w=2
+while(w<=(6*length(All_Season_Stats$Player))){
+OfReb[w]=All_Season_Stats$ORB_18[floor(w/6)+1]
+OfReb[w+1]=All_Season_Stats$ORB_17[floor(w/6)+1]###Every 5th entry is the offreb for 18, and so on
+OfReb[w+2]=All_Season_Stats$ORB_16[floor(w/6)+1]
+OfReb[w+3]=All_Season_Stats$ORB_15[floor(w/6)+1]
+OfReb[w+4]=All_Season_Stats$ORB_14[floor(w/6)+1]
 
-w=w+5
+w=w+6
 
 }
 tail(OfReb,25)
@@ -227,15 +231,15 @@ DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for 
 
 
 
-ww=1
-while(ww<=(5*length(All_Season_Stats$Player))){
-DefReb[ww]=All_Season_Stats$DRB_18[floor(ww/5)+1]
-DefReb[ww+1]=All_Season_Stats$DRB_17[floor(ww/5)+1]###Every 5th entry is the defreb for 18, and so on
-DefReb[ww+2]=All_Season_Stats$DRB_16[floor(ww/5)+1]
-DefReb[ww+3]=All_Season_Stats$DRB_15[floor(ww/5)+1]
-DefReb[ww+4]=All_Season_Stats$DRB_14[floor(ww/5)+1]
+ww=2
+while(ww<=(6*length(All_Season_Stats$Player))){
+DefReb[ww]=All_Season_Stats$DRB_18[floor(ww/6)+1]
+DefReb[ww+1]=All_Season_Stats$DRB_17[floor(ww/6)+1]###Every 5th entry is the defreb for 18, and so on
+DefReb[ww+2]=All_Season_Stats$DRB_16[floor(ww/6)+1]
+DefReb[ww+3]=All_Season_Stats$DRB_15[floor(ww/6)+1]
+DefReb[ww+4]=All_Season_Stats$DRB_14[floor(ww/6)+1]
 
-ww=ww+5
+ww=ww+6
 
 }
 tail(DefReb,25)
@@ -253,15 +257,15 @@ Assist=rep(NA,length(All_Season_Stats$Player))##This will be the total  assists 
 
 
 
-m=1
-while(m<=(5*length(All_Season_Stats$Player))){
-Assist[m]=All_Season_Stats$AST_18[floor(m/5)+1]
-Assist[m+1]=All_Season_Stats$AST_17[floor(m/5)+1]###Every 5th entry is the assist for 18, and so on
-Assist[m+2]=All_Season_Stats$AST_16[floor(m/5)+1]
-Assist[m+3]=All_Season_Stats$AST_15[floor(m/5)+1]
-Assist[m+4]=All_Season_Stats$AST_14[floor(m/5)+1]
+m=2
+while(m<=(6*length(All_Season_Stats$Player))){
+Assist[m]=All_Season_Stats$AST_18[floor(m/6)+1]
+Assist[m+1]=All_Season_Stats$AST_17[floor(m/6)+1]###Every 5th entry is the assist for 18, and so on
+Assist[m+2]=All_Season_Stats$AST_16[floor(m/6)+1]
+Assist[m+3]=All_Season_Stats$AST_15[floor(m/6)+1]
+Assist[m+4]=All_Season_Stats$AST_14[floor(m/6)+1]
 
-m=m+5
+m=m+6
 
 }
 
@@ -272,15 +276,15 @@ tail(Assist,25)
 
 Steal=rep(NA,length(All_Season_Stats$Player))##This will be the total steals in each season
 
-mm=1
-while(mm<=(5*length(All_Season_Stats$Player))){
-Steal[mm]=All_Season_Stats$STL_18[floor(mm/5)+1]
-Steal[mm+1]=All_Season_Stats$STL_17[floor(mm/5)+1]###Every 5th entry is the steal for 18, and so on
-Steal[mm+2]=All_Season_Stats$STL_16[floor(mm/5)+1]
-Steal[mm+3]=All_Season_Stats$STL_15[floor(mm/5)+1]
-Steal[mm+4]=All_Season_Stats$STL_14[floor(mm/5)+1]
+mm=2
+while(mm<=(6*length(All_Season_Stats$Player))){
+Steal[mm]=All_Season_Stats$STL_18[floor(mm/6)+1]
+Steal[mm+1]=All_Season_Stats$STL_17[floor(mm/6)+1]###Every 5th entry is the steal for 18, and so on
+Steal[mm+2]=All_Season_Stats$STL_16[floor(mm/6)+1]
+Steal[mm+3]=All_Season_Stats$STL_15[floor(mm/6)+1]
+Steal[mm+4]=All_Season_Stats$STL_14[floor(mm/6)+1]
 
-mm=mm+5
+mm=mm+6
 
 }
 tail(Steal,25)
@@ -291,15 +295,15 @@ tail(Steal,25)
 Block=rep(NA,length(All_Season_Stats$Player))##This will be the total blocks in each season
 
 
-q=1
-while(q<=(5*length(All_Season_Stats$Player))){
-Block[q]=All_Season_Stats$BLK_18[floor(q/5)+1]
-Block[q+1]=All_Season_Stats$BLK_17[floor(q/5)+1]###Every 5th entry is the block for 18, and so on
-Block[q+2]=All_Season_Stats$BLK_16[floor(q/5)+1]
-Block[q+3]=All_Season_Stats$BLK_15[floor(q/5)+1]
-Block[q+4]=All_Season_Stats$BLK_14[floor(q/5)+1]
+q=2
+while(q<=(6*length(All_Season_Stats$Player))){
+Block[q]=All_Season_Stats$BLK_18[floor(q/6)+1]
+Block[q+1]=All_Season_Stats$BLK_17[floor(q/6)+1]###Every 5th entry is the block for 18, and so on
+Block[q+2]=All_Season_Stats$BLK_16[floor(q/6)+1]
+Block[q+3]=All_Season_Stats$BLK_15[floor(q/6)+1]
+Block[q+4]=All_Season_Stats$BLK_14[floor(q/6)+1]
 
-q=q+5
+q=q+6
 
 }
 tail(Block,25)
@@ -312,15 +316,15 @@ tail(Block,25)
 TOV=rep(NA,length(All_Season_Stats$Player))##This will be the total turnovers per game in each season
 
 
-qq=1
-while(qq<=(5*length(All_Season_Stats$Player))){
-TOV[qq]=All_Season_Stats$TOV_18[floor(qq/5)+1]
-TOV[qq+1]=All_Season_Stats$TOV_17[floor(qq/5)+1]###Every 5th entry is the turnover for 18, and so on
-TOV[qq+2]=All_Season_Stats$TOV_16[floor(qq/5)+1]
-TOV[qq+3]=All_Season_Stats$TOV_15[floor(qq/5)+1]
-TOV[qq+4]=All_Season_Stats$TOV_14[floor(qq/5)+1]
+qq=2
+while(qq<=(6*length(All_Season_Stats$Player))){
+TOV[qq]=All_Season_Stats$TOV_18[floor(qq/6)+1]
+TOV[qq+1]=All_Season_Stats$TOV_17[floor(qq/6)+1]###Every 5th entry is the turnover for 18, and so on
+TOV[qq+2]=All_Season_Stats$TOV_16[floor(qq/6)+1]
+TOV[qq+3]=All_Season_Stats$TOV_15[floor(qq/6)+1]
+TOV[qq+4]=All_Season_Stats$TOV_14[floor(qq/6)+1]
 
-qq=qq+5
+qq=qq+6
 
 }
 
@@ -333,15 +337,15 @@ tail(TOV,25)
 Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
 
 
-s=1
-while(s<=(5*length(All_Season_Stats$Player))){
-Fouls[s]=All_Season_Stats$PF_18[floor(s/5)+1]
-Fouls[s+1]=All_Season_Stats$PF_17[floor(s/5)+1]###Every 5th entry is the turnover for 18, and so on
-Fouls[s+2]=All_Season_Stats$PF_16[floor(s/5)+1]
-Fouls[s+3]=All_Season_Stats$PF_15[floor(s/5)+1]
-Fouls[s+4]=All_Season_Stats$PF_14[floor(s/5)+1]
+s=2
+while(s<=(6*length(All_Season_Stats$Player))){
+Fouls[s]=All_Season_Stats$PF_18[floor(s/6)+1]
+Fouls[s+1]=All_Season_Stats$PF_17[floor(s/6)+1]###Every 5th entry is the turnover for 18, and so on
+Fouls[s+2]=All_Season_Stats$PF_16[floor(s/6)+1]
+Fouls[s+3]=All_Season_Stats$PF_15[floor(s/6)+1]
+Fouls[s+4]=All_Season_Stats$PF_14[floor(s/6)+1]
 
-s=s+5
+s=s+6
 
 }
 tail(Fouls,25)
@@ -355,8 +359,10 @@ tail(Fouls,25)
 
 
 
+
+
 ```{r the data set}
-DatSet=data.frame(Name,Pos2,Age,predAge,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
+DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
 tail(DatSet,25)
 
 ```
@@ -382,10 +388,7 @@ library("ggplot2", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
 ```{r function Field Goals}
 Fun_FG=function(Age,Name){##Function takes vector of names and ages contained in DatSet
   
-  
-  
-  Age=(which(DatSet)==Name)##ages we care about are the ones when that name played
-  Age=c(Age,max(Age)+1)##we want to predict his next year so we find his oldest age and add one
+ 
   if(Name=="Aaron Brooks"){##Aaron brooks is default so coef is 0
     coef=0
   }else{
@@ -394,10 +397,13 @@ Fun_FG=function(Age,Name){##Function takes vector of names and ages contained in
     coef=as.numeric(fit1$coefficients[(which(All_Season_Stats==Name))+2])##the corresponding coefficient for each player is how that player changes the graph, with 3 non name coeffiecents and one default we only have to add 2 to shift it correctly
   }
   pred=-1.900e+03+(-3.069e+00*Age*Age)+162.52126*Age+coef##The other coeffiecents don't change
-  
+  pred
 }
 ```
 
+```{r}
+Fun_FG(DatSet$Age,DatSet$Name)
+```
 
 
 
