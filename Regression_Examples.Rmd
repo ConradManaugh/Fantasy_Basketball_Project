@@ -1,0 +1,30 @@
+---
+title: "Regression_Ideas"
+output: html_document
+---
+
+##Just going to use the data to see what different methods of forecasting look like.
+```{r}
+library(readr)
+All_Season_Stats=read_csv("All_Season_Stats.csv")
+
+tail(All_Season_Stats,25)
+##The data as it stands could be reorganized, I am going to reorgainzie it by season with an emphasys on player age,so each player will have 5 observations at max.
+
+
+
+
+
+```
+```{r}
+
+Name=rep(NA,5*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player
+Pos2=(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
+
+data.frame=c()
+
+  
+  
+}
+```
+
