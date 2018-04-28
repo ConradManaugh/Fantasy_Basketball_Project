@@ -67,7 +67,7 @@ tail(Pos2,25)##Now Pos2 is a vector of positions as factors
 
 ```
 
-```{r}
+```{r Creating Age}
 
 
 
@@ -92,17 +92,29 @@ Age[k+4]=All_Season_Stats$Age[floor(k/5)+1]-4
 
 k=k+5
 }
-Age
+tail(Age,25)
 
 ```
 
-```{r}
+```{r Finiding year}
 
 ##Tm I am not going to use for anaylsys
 
 #I won't be using games played, games started, or minutes played in the analysis
 
 Year=rep(NA,5*length(All_Season_Stats$Player))##This will contain years 2018 through 2014
+
+y=c(2018,2017,2016,2015,2014)
+Year=rep(y,length(All_Season_Stats$Player))
+
+tail(Year,25)
+
+
+
+```
+
+```{r}
+
 
 FG=rep(NA,5*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on average per game in years 2014 to 2018
 
