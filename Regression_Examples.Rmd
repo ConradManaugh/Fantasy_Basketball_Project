@@ -161,8 +161,22 @@ In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field g
 
 
 
+l=1
+while(l<=(5*length(All_Season_Stats$Player))){
+In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/5)+1]
+In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/5)+1]###Every 5th entry is the 3 points made for 18, and so on
+In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/5)+1]
+In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/5)+1]
+In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/5)+1]
+
+l=l+5
+}
+tail(In_Arc,25)
+
+```
 
 
+```{r}
 FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made per game throughout the years
 
 OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made per game thruoghout the seasons
