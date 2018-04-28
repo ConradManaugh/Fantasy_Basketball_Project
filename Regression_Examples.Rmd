@@ -156,7 +156,7 @@ tail(Bhind_Arc,25)
 
 
 
-```{r}
+```{r finding In_Arc}
 In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made total throughout the years
 
 
@@ -176,11 +176,30 @@ tail(In_Arc,25)
 ```
 
 
+```{r finding FreeT}
+FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made total throughout the years
+
+ll=1
+while(ll<=(5*length(All_Season_Stats$Player))){
+FreeT[ll]=All_Season_Stats$FT_18[floor(ll/5)+1]
+FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/5)+1]###Every 5th entry is the 3 points made for 18, and so on
+FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/5)+1]
+FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/5)+1]
+FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/5)+1]
+
+ll=ll+5
+}
+tail(FreeT,25)
+
+```
+
 ```{r}
-FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made per game throughout the years
 
-OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made per game thruoghout the seasons
+OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made total thruoghout the seasons
 
+
+```
+```{r}
 DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for defensive rebounds
 
 ##Not going to use total rebounds, as in the shiny app a user can just make OfReb and DefReb the same for this result
