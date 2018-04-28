@@ -128,7 +128,7 @@ FG[ii+4]=All_Season_Stats$FG_14[floor(ii/5)+1]
 
 ii=ii+5
 }
-FG
+tail(FG,25)
 
 ```
 
@@ -164,7 +164,7 @@ In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field g
 l=1
 while(l<=(5*length(All_Season_Stats$Player))){
 In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/5)+1]
-In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/5)+1]###Every 5th entry is the 3 points made for 18, and so on
+In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/5)+1]###Every 5th entry is the 2 points made for 18, and so on
 In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/5)+1]
 In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/5)+1]
 In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/5)+1]
@@ -182,7 +182,7 @@ FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws mad
 ll=1
 while(ll<=(5*length(All_Season_Stats$Player))){
 FreeT[ll]=All_Season_Stats$FT_18[floor(ll/5)+1]
-FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/5)+1]###Every 5th entry is the 3 points made for 18, and so on
+FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/5)+1]###Every 5th entry is the free throw made for 18, and so on
 FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/5)+1]
 FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/5)+1]
 FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/5)+1]
@@ -193,12 +193,30 @@ tail(FreeT,25)
 
 ```
 
-```{r}
+```{r finding OfReb}
 
 OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made total thruoghout the seasons
 
 
+
+w=1
+while(w<=(5*length(All_Season_Stats$Player))){
+OfReb[w]=All_Season_Stats$ORB_18[floor(w/5)+1]
+OfReb[w+1]=All_Season_Stats$ORB_17[floor(w/5)+1]###Every 5th entry is the offreb for 18, and so on
+OfReb[w+2]=All_Season_Stats$ORB_16[floor(w/5)+1]
+OfReb[w+3]=All_Season_Stats$ORB_15[floor(w/5)+1]
+OfReb[w+4]=All_Season_Stats$ORB_14[floor(w/5)+1]
+
+w=w+5
+
+}
+tail(OfReb,25)
+
+
 ```
+
+
+
 ```{r}
 DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for defensive rebounds
 
