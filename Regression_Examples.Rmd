@@ -282,8 +282,27 @@ tail(Steal,25)
 ```
 
 
+```{r finding blocks}
+Block=rep(NA,length(All_Season_Stats$Player))##This will be the total blocks in each season
+
+
+q=1
+while(q<=(5*length(All_Season_Stats$Player))){
+Block[q]=All_Season_Stats$BLK_18[floor(q/5)+1]
+Block[q+1]=All_Season_Stats$BLK_17[floor(q/5)+1]###Every 5th entry is the block for 18, and so on
+Block[q+2]=All_Season_Stats$BLK_16[floor(q/5)+1]
+Block[q+3]=All_Season_Stats$BLK_15[floor(q/5)+1]
+Block[q+4]=All_Season_Stats$BLK_14[floor(q/5)+1]
+
+q=q+5
+
+}
+tail(Block,25)
+```
+
+
+
 ```{r}
-Block=rep(NA,length(All_Season_Stats$Player))##This will be the average blocks per game in each season
 
 TOV=rep(NA,length(All_Season_Stats$Player))##This will be the average turnovers per game in each season
 
