@@ -302,10 +302,29 @@ tail(Block,25)
 
 
 
+```{r finding Turnovers}
+
+TOV=rep(NA,length(All_Season_Stats$Player))##This will be the total turnovers per game in each season
+
+
+qq=1
+while(qq<=(5*length(All_Season_Stats$Player))){
+TOV[qq]=All_Season_Stats$TOV_18[floor(qq/5)+1]
+TOV[qq+1]=All_Season_Stats$TOV_17[floor(qq/5)+1]###Every 5th entry is the turnover for 18, and so on
+TOV[qq+2]=All_Season_Stats$TOV_16[floor(qq/5)+1]
+TOV[qq+3]=All_Season_Stats$TOV_15[floor(qq/5)+1]
+TOV[qq+4]=All_Season_Stats$TOV_14[floor(qq/5)+1]
+
+qq=qq+5
+
+}
+
+
+tail(TOV,25)
+```
+
+
 ```{r}
-
-TOV=rep(NA,length(All_Season_Stats$Player))##This will be the average turnovers per game in each season
-
 Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
 
 ##I won't be using points as we can just do 3 * 3 pointers made 2 * field goals made and 1 * free throws made
