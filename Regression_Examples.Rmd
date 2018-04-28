@@ -133,12 +133,30 @@ FG
 ```
 
 
-```{r}
+```{r Finding Bhind_Arc}
 
 #I won't be using field goals attempted
 
 Bhind_Arc=rep(NA,5*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
 
+jj=1
+while(jj<=(5*length(All_Season_Stats$Player))){
+Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/5)+1]
+Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/5)+1]###Every 5th entry is the field goals for 18, and so on
+Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/5)+1]
+Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/5)+1]
+Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/5)+1]
+
+jj=jj+5
+}
+tail(Bhind_Arc,25)
+
+
+```
+
+
+
+```{r}
 In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made per game throughout the years
 
 FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made per game throughout the years
