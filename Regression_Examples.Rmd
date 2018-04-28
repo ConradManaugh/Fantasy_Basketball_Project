@@ -357,6 +357,7 @@ tail(Fouls,25)
 
 ```
 
+  
 
 
 
@@ -369,11 +370,27 @@ tail(DatSet,25)
 
 
 
+
+
+
+
+
 ```{r model for FG}
 fit1=glm(FG~I(Age^2)+Age+Name)
 head(fit1$coefficients,5)
 
+
 ```
+
+
+```{r predict}
+pred_FG01=predict(fit1,DatSet)
+DatSet01=data.frame(DatSet,pred_FG01)
+DatSet01
+
+```
+
+
 
 ```{r ggplot}
 
@@ -382,6 +399,12 @@ library("ggplot2", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
 
 
 ```
+
+```{r graphs}
+ggplot(DatSet01[1:6,],mapping=aes(x=Age, y=FG,color="Blue"))+geom_point()+geom_line(mapping=aes(x=Age,y=pred_FG01,color="Red"))
+```
+
+
 
 
 
