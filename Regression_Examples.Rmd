@@ -401,7 +401,7 @@ library("ggplot2", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
 ```
 
 ```{r graphs}
-ggplot(DatSet01[1:6,],mapping=aes(x=Age, y=FG,color="Blue"))+geom_point()+geom_line(mapping=aes(x=Age,y=pred_FG01,color="Red"))
+ggplot(DatSet01[1:6,],mapping=aes(x=Age, y=FG,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_FG01,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_FG01,color="Predicted"))+geom_point()
 ```
 
 
