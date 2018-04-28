@@ -40,12 +40,43 @@ tail(Name,25)##Now names are factors that repeat 5 times in the data set for eac
 
 
 
-```{r}
+```{r Creating Position}
 
 
 Pos2=rep(NA,5*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
 
+
+
+##Since my goal for this is the same as with name, to repeat the position 5 times, i will re use my old loop.
+
+j=1 
+
+
+while(floor(j/5)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
+
+Pos2[j]=All_Season_Stats$Pos[floor(j/5)+1]
+Pos2[j+1]=All_Season_Stats$Pos[floor(j/5)+1]
+Pos2[j+2]=All_Season_Stats$Pos[floor(j/5)+1]
+Pos2[j+3]=All_Season_Stats$Pos[floor(j/5)+1]
+Pos2[j+4]=All_Season_Stats$Pos[floor(j/5)+1]
+
+j=j+5
+}
+Pos2=as.factor(Pos2)
+tail(Pos2,25)##Now Pos2 is a vector of positions as factors
+
+```
+
+```{r}
+
+
+
 Age=rep(NA,5*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
+
+
+```
+
+```{r}
 
 ##Tm I am not going to use for anaylsys
 
