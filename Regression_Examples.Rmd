@@ -324,12 +324,33 @@ tail(TOV,25)
 ```
 
 
-```{r}
+```{r finding fouls }
 Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
+
+
+s=1
+while(s<=(5*length(All_Season_Stats$Player))){
+Fouls[s]=All_Season_Stats$PF_18[floor(s/5)+1]
+Fouls[s+1]=All_Season_Stats$PF_17[floor(s/5)+1]###Every 5th entry is the turnover for 18, and so on
+Fouls[s+2]=All_Season_Stats$PF_16[floor(s/5)+1]
+Fouls[s+3]=All_Season_Stats$PF_15[floor(s/5)+1]
+Fouls[s+4]=All_Season_Stats$PF_14[floor(s/5)+1]
+
+s=s+5
+
+}
+tail(Fouls,25)
+
+
+
 
 ##I won't be using points as we can just do 3 * 3 pointers made 2 * field goals made and 1 * free throws made
 
+```
 
+
+
+```{r}
 DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
 DatSet
 
