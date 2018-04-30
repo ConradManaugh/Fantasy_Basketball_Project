@@ -1,152 +1,1013 @@
 ---
-title: "Group_Proposal"
-author: "Team Fantasy"
-date: "4/12/2018"
+title: "Regression Fit "
 output: html_document
 ---
-### Introduction
+```{r readng all season stats}
 
+```
 
-Fantasy sports have been a popular way for fans to get more knowledgeable and interested into the sports they love. Fantasy sports began as board and card games 50 years ago and have exploded since it was introduced to the internet. The appeal to fantasy sports is they allow fans to act as owners, managers and coaches of professional teams by allowing them to draft a team and watch the season unfold successfully or catastrophically. 
+#Just going to use the data to see what different methods of forecasting look like.
+```{r Looking at All_Season_Stats}
+install.packages("readr")
+library("readr", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+All_Season_Stats=read_csv("All_Season_Stats.csv")
 
-One of the most popular fantasy sports people participate in is fantasy basketball for the NBA. The first step when participating in fantasy basketball is drafting a team which usually consists of about thirteen players and there can be restrictions on how many players of each position an individual may draft (This all depends on the specific league one participates in). Once a team has been drafted, the league determines which statistics will be counted as fantasy points and how many fantasy points each statistic is worth. For example, a block counts for 1 fantasy points while a steal counts for 2. After this has been set and the NBA season begins, each night the fantasy points for each participant is totaled and the participant at the end of the regular season with the most fantasy points wins. Therefore, when drafting players one needs to be able to analyze players pasts statistics, predict future player statistics and weigh them based on the determine fantasy point scoring system to draft a team that will make them the optimal amount of points for the season. 
-
-With all the possible statistics to consider (depending on the particular fantasy league one is apart off), we hope to create a tool for fantasy NBA participants to use during their draft to help them make the best possible team selections. This tool ideally would allow a participant to input their individual league scoring system and the players that have already been selected in the draft and return the best possible team they could select based on NBA players statistics in the past five years and predictive modeling. Along with the output of the predicted best team, there will be graphical representations of why the particular players were chosen. 
-
-Our idea stated above matches the course focus on statistical programing because it involves taking a large data set and using a data pipeline in order to use that dataset to make prediction on NBA players future performance based on their past performance (their past statistics). We will also be providing visual representation of the data in the form of graphs which will compare players, as well as, coding a shiny app for fantasy league participants to easily customize the data pipeline to their personal fantasy league rules. 
-
-
-### Related Work
-
-Someone had tried to analyze the data to prepare for the draft strategy for the new season in 14-team basketball league. He took the data from cutting and copying on ESPN.com and NBA.com. He put a flat file of the top 250 players from the previous season. Then he created a binary variable for the top 42 players (3 players per 14 teams). The “1” means the player is a top 3 players, otherwise he is not. He used 28 independent variables from the previous season to identify the “top 42 players”. He came up with conclusions that field-goal percentage, assist and blocks are the difference-makers because most players in NBA are good at points and rebounds. However, assists and blocks are rarer so that they are more valuable to a fantasy team. 
-Other projects include computing the average stats for each categories of players. Some of the other are having the graph comparing the specific player and league’s average. Or group comes up data calculating the standard deviation to see how far away a player is from average.
-
-Comparing to other projects, our group will use the bigger dataset. Most projects are using previous year’s dataset for predicting the future data. We are going to use the data in the past five years to make a more precise prediction for player’s future performance. One of the most difference is that our group will use the Shiny app in R. Most projects online are only included complex graphs or prolix passages that make reader hard to understand their ideas. For us, we will make the Shiny app that looks very easy and clear for people to manipulate. For example, we will list all our players. People can click each of them. Then they can look at each player’s trend data whether they are getting better or worse or the graph comparison between players. It is very simple for people to control in the app. All the data fantasy NBA participants want it will exist in the app. If they want to see the difference between players, they also can click the graphs to see their difference in various categories, such as points, rebounds, assists and so on, so they will figure out what type of player they are looking for. Thus, our app is serving as a recommender for fantasy basketball player to select their team. 
+tail(All_Season_Stats,25)
+##The data as it stands could be reorganized, I am going to reorgainzie it by season with an emphasys on player age,so each player will have 5 observations at max.
 
 
 
-### Methods
 
 
-The methodology for our group project will closely follow the analytical data pipelines phases. As we need to import data related to basketball players off the internet we will need to use SelectorGadget as well as the rvest package to scrape this information offline. We plan to import the data from http://www.basketball-reference.com assuming that we have continued success in scraping from that site. Then we will have to tidy the data, so it is likely we will need stringr, rvest, and tidyr. 
+```
 
 
-Our goal in tidying the data is to have the data organized so that each player’s average score during a year in the NBA is an observation. So, for every year a player has played in the NBA they would have an extra observation. Each observation would contain the name, organization, position, and age of the player. Along with these three factor variables and one-time variable, likely an integer, we will have statistics variables for the average of the season, likely some form of numeric. The desired statistics follow the most widely used statistics in fantasy NBA under the point-based scoring method, where each statistical category counts for a set number of points. The categories likely to be used are points, rebounds, assists, offensive blocks, defensive blocks, steals, fouls, turnovers, field goal percentage, and free throw percentage.
+#I'll Start by Making the data Set using the data from online
+
+```{r Creating Name}
+
+Name=rep(NA,6*length(All_Season_Stats$Player))#Making the data set full with NA's first, this will have 5 repeated names for each player and an extra for the predicted year, all data is total yearly for different stats
+
+i=1 
 
 
-How we plan to model our NBA league will directly impact how we transform the data, so it must be discussed. NBA fantasy can be done many ways, but the way we are going to be analyzing is based on the fantasy points method of NBA fantasy. In this method the group playing sets each statistic to have a point value and the points for your fantasy team are calculated real time. At the end of the season those with more points win. This model seemed the most straight forward in implementing our project. It will also allow for a large amount of user customization when the project is done, as a group of friends can decide how many points each statistic is worth, or if they are worth none. 
+while(floor(i/6)+1<=length(All_Season_Stats$Player)){###the floor(i/5)+1 always rounds to the first name for the first 5 entries and the second name for the next 5 entries
 
-
-Then we must transform the data of into some sort of prediction for the coming years data. This part can be done through time series modeling. We would take every individual player individual statistics and use a time series model to predict how they will perform in that statistic next year. Now we have a new transformed data for each player containing predictions for their average statistics per game next year. We would then allow for user input to give statistics more weight in totaling points. So, the final dataset that we show is our prediction data set multiplied by a vector of user weight inputs, as well as former years averages multiplied by user inputs.
-
-
-The visualization part concerns how we display this information in graphs, as well as how we display the entire shiny application. At this moment the overall layout for our shiny app consists of a tab for changing settings on one side, a tab for picking players on the other side, and a list of picked players for each team on the bottom. On the side with players we will have rows sorted by players expected total score next year, highest first. These players will descend the page, each player taking up a row. On the players will be a summary of who they are, along with the current years statistics and our predicted statistics. Next to these numbers will be a button that switches to graphs pertaining to this player. By clicking on multiple boxes, we can see different player comparisons. 
-
-
-
-Regarding the graphs that we will compose using our data, the graphs are either comparative between players, or analyzing an individual player over time. When comparing players, we will use side by side bar plots with the x axis being source of points and the y axis being amount of points. The bars will be sorted by individual statistic, points with points and assists with assists. This allows direct comparison between the two chosen players to determine who is better at what category, as well as who is better. When analyzing an individual player change throughout time we will use a scatterplot graph with years on the x axis and total points on the y axis. This scatterplot will be accompanied by a best fit regression line to be determined while analyzing the data, although we suspect it to be parabolic with players getting worse with age after they peak. Along with normal points from actual years we will highlight our predicted point, which is the point that our best fit line intersects with next year. We could also implement it where if a user clicks on a predicted or past point they can see a summary of what statistics a player specializes in during any year.
-
-In summation we will have to write code that retrieves the data for current players as well as these players former years. We then must write code that sorts this data into tidy and usable datasets. Then we need to write a time series model that takes players past NBA performances and predicts next years performance. We then must code a shiny interface that takes these predicted and historic point values and displays them along with players name, team, and position. Lastly, our shiny application must have a way to create graphs that explain different players differences as well as the idea behind our prediction.
-
-
-### Feasibility
-
-
-We believe that all the goals for this fantasy team selector tool we will be able to create by the end of the semester.  This includes the graphical representations of players current and past statistics, graphical comparisons of players, a shiny app that allows for customizability to different league rules and the selection of a fantasy league team. However, if we do run into complications during the creation process, we may have to scale back the amount of customizability provided in the app in order to complete this project on time. 
-
-In order to complete the project, we must complete the following tasks… 
-
-1.	Web scrape and tidy the NBA statistics data (Anne)
-
-2.	Write code to create prediction data through time series modeling (Conrad)
-
-3.	Visually/Graphically represent the prediction data (Zhaobin)
-
-4.	Create the shiny app (Everyone)
-
-![Figure 1. The ganett chart above describes the timeline set in place to complete the tasks stated for this project.](ganett_chart.png)
-
-
-### Conclusion
-In general, our goal is to help fantasy basketball fans draft their players by analyzing players’ past statistics in order to make the optimal team for themselves. We will create the tool for fantasy NBA participants who will use it during the draft to come out the best team selections. Inside the app, we will follow the analytical data pipelines phases. We are going to import data from website, and then we will tidy the data by using stringr, rvest, and tidyr. 
-For the dataset, we will organize each player’s average score. Each observation will contain the name, team name, position, weight, age, and so on. The scores will come out by the algorithm of fantasy inside, likely each statistical category counts for a set number of points. The variable include points, rebounds, assists, blocks, steals, turnovers, field goal percentage, and free throw percentage. 
-We will also be using the data to predict for the coming years data by time series modeling. The method is to take every individual player’ statistics to a use series model, so we can predict how individuals will perform next year. After that, the user will be able to see the prediction data set multiplied by a vector of user weight inputs. 
-Inside the App, we will also include the visualization part. The overall layout for shiny app will consist a tab for changing setting on one side. There is another tab for clicking players on the other side. There will be a list of selected players on the bottom. Inside the player click, we will have rows sorted by players expected total score in upcoming year in descending order. In each player’s page, we will include some graphs.
-	For the graphs, we will compare players and analyze individual player over time. For comparing players, will be using side by side bar plots that the x-axis represents points and y-axis represents the transferred fantasy points. It will be sorted by many categories of statistics, such as points, rebounds, assists, and so on. We will be able to see directly who is better according to the graphs. For the individual player graph, we will be using a scatterplot graph with years on the x-axis and the total fantasy points on the y-axis. It will be presented by the best fit regression line to be determined. 
-	Again, our fantasy team selector tool will include the graphical representations of current and past statistics of players and graphical comparisons of players. By looking at some pre-existing projects, I find out that out project’s novelty is the convenience and clear path to the success of the fantasy NBA life. Some articles are being too long or complex analysis of basketball itself. Others are having no graphs or comparisons between players. Our app will help people tidy the data so that they can click whatever player they want to look at inside the app. What is more, when they have trouble at deciding to select player, they can open the charts or comparison graphs to see what kind of categories they need to. Overall, I think it will be a great tool for fantasy NBA participants to use. 
+Name[i]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+1]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+2]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+3]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+4]=All_Season_Stats$Player[floor(i/6)+1]
+Name[i+5]=All_Season_Stats$Player[floor(i/6)+1]
+i=i+6
+}
+Name=as.factor(Name)
+tail(Name,25)##Now names are factors that repeat 6 times in the data set for each name
+```
 
 
 
-### References
+
+```{r Creating Position}
 
 
-Davis, Nickolas W., and Margaret Carlisle Duncan. "Sports Knowledge   Is Power Reinforcing Masculine Privilege Through Fantasy Sport     League Participation." Journal of Sports and Social Issues 30,     no.   3 (August 1, 2006): 244-46.
+Pos2=rep(NA,6*length(All_Season_Stats$Player))##This will repeat the position of the player listed in this data set, as I assume nobody changed for simplicity.
 
-Hadley Wickham, Romain Francois, Lionel Henry and
-  Kirill Müller (2017). dplyr: A Grammar of Data
-  Manipulation. R package version 0.7.4.
-  https://CRAN.R-project.org/package=dplyr
 
-H. Wickham. ggplot2: Elegant Graphics for Data
-  Analysis. Springer-Verlag New York, 2009.
 
-Hadley Wickham (2016). rvest: Easily Harvest (Scrape)
-  Web Pages. R package version 0.3.2.
-  https://CRAN.R-project.org/package=rvest
+##Since my goal for this is the same as with name, to repeat the position 6 times, i will re use my old loop.
 
-Hadley Wickham (2018). stringr: Simple, Consistent
-  Wrappers for Common String Operations. R package
-  version 1.3.0.
-  https://CRAN.R-project.org/package=stringr
+j=1 
 
-Hadley Wickham and Lionel Henry (2018). tidyr: Easily
-  Tidy Data with 'spread()' and 'gather()' Functions. R
-  package version 0.8.0.
-  https://CRAN.R-project.org/package=tidyr
+
+while(floor(j/6)+1<=length(All_Season_Stats$Pos)){###the floor(j/5)+1 always rounds to the first position for the first 6 entries and the second position for the next 6 entries
+
+Pos2[j]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+1]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+2]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+3]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+4]=All_Season_Stats$Pos[floor(j/6)+1]
+Pos2[j+5]=All_Season_Stats$Pos[floor(j/6)+1]
+
+j=j+6
+}
+Pos2=as.factor(Pos2)
+tail(Pos2,25)##Now Pos2 is a vector of positions as factors
+
+```
+
+```{r Creating Age}
+
+
+
+Age=rep(NA,6*length(All_Season_Stats$Player))##This will end up being a list of ages, starting at current age and going down one for the past years
+
+
+
+
+
+
+
+k=1 
+
+
+while(floor(k/6)+1<=length(All_Season_Stats$Pos)){###the floor(j/6)+1 always rounds to the first name for the first 6 entries and the second name for the next 6 entries
+
   
-Raney, Arthur A., and Jennings Bryant. 2014. Handbook of Sports and   Media. New York, New York: Routledge, Taylor & Francis Group.
 
-Stefan Milton Bache and Hadley Wickham (2014).
-  magrittr: A Forward-Pipe Operator for R. R package
-  version 1.5.
-  https://CRAN.R-project.org/package=magrittr
   
-Winston Chang, Joe Cheng, JJ Allaire, Yihui Xie and
-  Jonathan McPherson (2017). shiny: Web Application
-  Framework for R. R package version 1.0.5.
-  https://CRAN.R-project.org/package=shiny
-
-Wrinn, Corey. 2015. “Data Analysis in Fantasy Basketball: Making it Easy to Beat Your Friends.” Rapidinsightinc.com. Oct.22, 2015. http://www.rapidinsightinc.com/data-analysis-fantasy-basketball-making-easy-beat-friends/
-
-
-Tang, Steven. 2014. “Drafting a Fantasy Basketball Team With Help From Statistics and a Knapsack.” Medium.com. Oct 21,2014. https://medium.com/fun-with-data-and-stats/drafting-a-fantasy-basketball-team-c94967464908
+  
+Age[k]=All_Season_Stats$Age[floor(k/6)+1]+1##Predicted age is one more then age in 2018
+Age[k+1]=All_Season_Stats$Age[floor(k/6)+1]###Using the same old loop which repeats entries I edited it so that the following entries after every 5th is reduced by one, so now we should have a list of ages that the players were at during each season
+Age[k+2]=All_Season_Stats$Age[floor(k/6)+1]-1
+Age[k+3]=All_Season_Stats$Age[floor(k/6)+1]-2
+Age[k+4]=All_Season_Stats$Age[floor(k/6)+1]-3
+Age[k+5]=All_Season_Stats$Age[floor(k/6)+1]-4
 
 
+k=k+6
+}
+tail(Age,25)
 
-### Appendix
+```
+
+```{r Finiding year}
+
+##Tm I am not going to use for anaylsys
+
+#I won't be using games played, games started, or minutes played in the analysis
+
+Year=rep(NA,6*length(All_Season_Stats$Player))##This will contain years 2019 through 2014
+
+y=c(2019,2018,2017,2016,2015,2014)
+Year=rep(y,length(All_Season_Stats$Player))
+
+tail(Year,25)
+
+
+
+```
+
+```{r Finding FG}
+
+
+FG=rep(NA,6*length(All_Season_Stats$Player))##This will contain a record of fieldgoals made on total in years each year 2014 to 2018
+
+ii=2###Start at 2 because first entry for each player is year 2019 nobody has made any FG
+while(ii<=(6*length(All_Season_Stats$Player))){
+  
+##First entry stays NA each time
+FG[ii]=All_Season_Stats$FG_18[floor(ii/6)+1]
+FG[ii+1]=All_Season_Stats$FG_17[floor(ii/6)+1]###Every 5th entry is the field goals for 18, and so on
+FG[ii+2]=All_Season_Stats$FG_16[floor(ii/6)+1]
+FG[ii+3]=All_Season_Stats$FG_15[floor(ii/6)+1]
+FG[ii+4]=All_Season_Stats$FG_14[floor(ii/6)+1]
+
+ii=ii+6
+}
+tail(FG,25)
+
+```
+
+
+```{r Finding Bhind_Arc}
+
+#I won't be using field goals attempted
+
+Bhind_Arc=rep(NA,6*length(All_Season_Stats$Player))##This will contain the 3 point field goals made per game through the years.
+
+jj=2
+while(jj<=(6*length(All_Season_Stats$Player))){
+Bhind_Arc[jj]=All_Season_Stats$`3P_18`[floor(jj/6)+1]
+Bhind_Arc[jj+1]=All_Season_Stats$`3P_17`[floor(jj/6)+1]###Every 5th entry is the 3 points made for 18, and so on
+Bhind_Arc[jj+2]=All_Season_Stats$`3P_16`[floor(jj/6)+1]
+Bhind_Arc[jj+3]=All_Season_Stats$`3P_15`[floor(jj/6)+1]
+Bhind_Arc[jj+4]=All_Season_Stats$`3P_14`[floor(jj/6)+1]
+
+jj=jj+6
+}
+tail(Bhind_Arc,25)
+
+
+```
+
+
+
+```{r finding In_Arc}
+In_Arc=rep(NA,length(All_Season_Stats$Player))#This will contain 2 point field goals made total throughout the years
+
+
+
+l=2
+while(l<=(6*length(All_Season_Stats$Player))){
+In_Arc[l]=All_Season_Stats$`2P_18`[floor(l/6)+1]
+In_Arc[l+1]=All_Season_Stats$`2P_17`[floor(l/6)+1]###Every 5th entry is the 2 points made for 18, and so on
+In_Arc[l+2]=All_Season_Stats$`2P_16`[floor(l/6)+1]
+In_Arc[l+3]=All_Season_Stats$`2P_15`[floor(l/6)+1]
+In_Arc[l+4]=All_Season_Stats$`2P_14`[floor(l/6)+1]
+
+l=l+6
+}
+tail(In_Arc,25)
+
+```
+
+
+```{r finding FreeT}
+FreeT=rep(NA,length(All_Season_Stats$Player))##This will contain free throws made total throughout the years
+
+ll=2
+while(ll<=(6*length(All_Season_Stats$Player))){
+FreeT[ll]=All_Season_Stats$FT_18[floor(ll/6)+1]
+FreeT[ll+1]=All_Season_Stats$FT_17[floor(ll/6)+1]###Every 5th entry is the free throw made for 18, and so on
+FreeT[ll+2]=All_Season_Stats$FT_16[floor(ll/6)+1]
+FreeT[ll+3]=All_Season_Stats$FT_15[floor(ll/6)+1]
+FreeT[ll+4]=All_Season_Stats$FT_14[floor(ll/6)+1]
+
+ll=ll+6
+}
+tail(FreeT,25)
+
+```
+
+```{r finding OfReb}
+
+OfReb=rep(NA,length(All_Season_Stats$Player))##This will contain offensive rebound made total thruoghout the seasons
+
+
+
+w=2
+while(w<=(6*length(All_Season_Stats$Player))){
+OfReb[w]=All_Season_Stats$ORB_18[floor(w/6)+1]
+OfReb[w+1]=All_Season_Stats$ORB_17[floor(w/6)+1]###Every 5th entry is the offreb for 18, and so on
+OfReb[w+2]=All_Season_Stats$ORB_16[floor(w/6)+1]
+OfReb[w+3]=All_Season_Stats$ORB_15[floor(w/6)+1]
+OfReb[w+4]=All_Season_Stats$ORB_14[floor(w/6)+1]
+
+w=w+6
+
+}
+tail(OfReb,25)
+
+
+```
+
+
+
+```{r finding DefReb}
+DefReb=rep(NA,length(All_Season_Stats$Player))##This will be like OfReb but for defensive rebounds
+
+
+
+ww=2
+while(ww<=(6*length(All_Season_Stats$Player))){
+DefReb[ww]=All_Season_Stats$DRB_18[floor(ww/6)+1]
+DefReb[ww+1]=All_Season_Stats$DRB_17[floor(ww/6)+1]###Every 5th entry is the defreb for 18, and so on
+DefReb[ww+2]=All_Season_Stats$DRB_16[floor(ww/6)+1]
+DefReb[ww+3]=All_Season_Stats$DRB_15[floor(ww/6)+1]
+DefReb[ww+4]=All_Season_Stats$DRB_14[floor(ww/6)+1]
+
+ww=ww+6
+
+}
+tail(DefReb,25)
+
+
+##Not going to use total rebounds, as in the shiny app a user can just make OfReb and DefReb the same for this result
+
+
+```
+
+
+```{r finding assist}
+
+Assist=rep(NA,length(All_Season_Stats$Player))##This will be the total  assists in each season
+
+
+
+m=2
+while(m<=(6*length(All_Season_Stats$Player))){
+Assist[m]=All_Season_Stats$AST_18[floor(m/6)+1]
+Assist[m+1]=All_Season_Stats$AST_17[floor(m/6)+1]###Every 5th entry is the assist for 18, and so on
+Assist[m+2]=All_Season_Stats$AST_16[floor(m/6)+1]
+Assist[m+3]=All_Season_Stats$AST_15[floor(m/6)+1]
+Assist[m+4]=All_Season_Stats$AST_14[floor(m/6)+1]
+
+m=m+6
+
+}
+
+tail(Assist,25)
+```
+
+```{r finding steals}
+
+Steal=rep(NA,length(All_Season_Stats$Player))##This will be the total steals in each season
+
+mm=2
+while(mm<=(6*length(All_Season_Stats$Player))){
+Steal[mm]=All_Season_Stats$STL_18[floor(mm/6)+1]
+Steal[mm+1]=All_Season_Stats$STL_17[floor(mm/6)+1]###Every 5th entry is the steal for 18, and so on
+Steal[mm+2]=All_Season_Stats$STL_16[floor(mm/6)+1]
+Steal[mm+3]=All_Season_Stats$STL_15[floor(mm/6)+1]
+Steal[mm+4]=All_Season_Stats$STL_14[floor(mm/6)+1]
+
+mm=mm+6
+
+}
+tail(Steal,25)
+```
+
+
+```{r finding blocks}
+Block=rep(NA,length(All_Season_Stats$Player))##This will be the total blocks in each season
+
+
+q=2
+while(q<=(6*length(All_Season_Stats$Player))){
+Block[q]=All_Season_Stats$BLK_18[floor(q/6)+1]
+Block[q+1]=All_Season_Stats$BLK_17[floor(q/6)+1]###Every 5th entry is the block for 18, and so on
+Block[q+2]=All_Season_Stats$BLK_16[floor(q/6)+1]
+Block[q+3]=All_Season_Stats$BLK_15[floor(q/6)+1]
+Block[q+4]=All_Season_Stats$BLK_14[floor(q/6)+1]
+
+q=q+6
+
+}
+tail(Block,25)
+```
+
+
+
+```{r finding Turnovers}
+
+TOV=rep(NA,length(All_Season_Stats$Player))##This will be the total turnovers per game in each season
+
+
+qq=2
+while(qq<=(6*length(All_Season_Stats$Player))){
+TOV[qq]=All_Season_Stats$TOV_18[floor(qq/6)+1]
+TOV[qq+1]=All_Season_Stats$TOV_17[floor(qq/6)+1]###Every 5th entry is the turnover for 18, and so on
+TOV[qq+2]=All_Season_Stats$TOV_16[floor(qq/6)+1]
+TOV[qq+3]=All_Season_Stats$TOV_15[floor(qq/6)+1]
+TOV[qq+4]=All_Season_Stats$TOV_14[floor(qq/6)+1]
+
+qq=qq+6
+
+}
+
+
+tail(TOV,25)
+```
+
+
+```{r finding fouls }
+Fouls=rep(NA,length(All_Season_Stats$Player))##This will be the average fouls per game in each season
+
+
+s=2
+while(s<=(6*length(All_Season_Stats$Player))){
+Fouls[s]=All_Season_Stats$PF_18[floor(s/6)+1]
+Fouls[s+1]=All_Season_Stats$PF_17[floor(s/6)+1]###Every 5th entry is the turnover for 18, and so on
+Fouls[s+2]=All_Season_Stats$PF_16[floor(s/6)+1]
+Fouls[s+3]=All_Season_Stats$PF_15[floor(s/6)+1]
+Fouls[s+4]=All_Season_Stats$PF_14[floor(s/6)+1]
+
+s=s+6
+
+}
+tail(Fouls,25)
+
+
+
+
+##I won't be using points as we can just do 3 * 3 pointers made 2 * field goals made and 1 * free throws made
+
+```
+
+  
+
+
+
+
+```{r the data set}
+DatSet=data.frame(Name,Pos2,Age,Year,FG,Bhind_Arc,In_Arc,FreeT,OfReb,DefReb,Assist,Steal,Block,TOV,Fouls)
+tail(DatSet,25)
+
+```
+
+
+
+#Now I will test a method of modeling with field goals
+
+
+
+```{r model for FG}
+fit1=glm(FG~I(Age^2)+Age+Name)
+head(fit1$coefficients,5)
+
+
+```
+
+
+
+
+
+```{r predict}
+pred_FG01=predict(fit1,DatSet)
+DatSet01=data.frame(DatSet,pred_FG01)
+DatSet01
+
+```
+
+
+
+```{r ggplot}
+
+install.packages("ggplot2")
+library("ggplot2", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+
+
+```
+
+```{r graphs}
+GraphFG_Name=function(Name){
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSet01[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=FG,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_FG01,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_FG01,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Field Goal's of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Field Goals",
+ color = "Actual or Predicted")
+}
+GraphFG_Num=function(ii){
+
+ggplot(DatSet01[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=FG,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_FG01,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_FG01,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Field Goal's of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Field Goals",
+ color = "Actual or Predicted")
+}
+```
+
+
+
+
+
+
+
+
+
+
+
+```{r install dplyr}
+install.packages("dplyr")
+library("dplyr", lib.loc="~/R/x86_64-pc-linux-gnu-library/3.4")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 ```{r}
-Name=c("Lebron James", "Lebron James","Derrick Rose","Derrick Rose")
-Team=c("CLE","CLE","CHI","CHI")
-Age=c(19,33,20,21)
-year=c(2003,2017,2008,2009)
-points=c(20.9,27.5,16.8,20.8)
-offrebounds=c(1.3,1.2,1.2,.8)
-defrebounds=c(4.2,7.5,2.7,2.9)
-steals=c(1.6,1.4,.8,.7)
-fouls=c(1.9,1.6,1.5,1.2)
-turnovers=c(3.5,4.2,2.5,2.8)
-fgperc=c(.417,.542,.475,.489)
-ftperc=c(.754,.731,.788,.766)
-BaseData=data.frame(Name,Team,Age,year,points,offrebounds,defrebounds,steals,fouls,turnovers,fgperc,ftperc)
-BaseData
+
+GraphFG_Num(442)
+
 ```
 
 
-An example of the dataset that we will use. 
 
 
-![Sketch of Plan](img/plan_sketch.JPG)
+
+
+
+
+#Since that seemed to work so well I will now model all of the attributes with functions like I did field goals
+
+
+
+
+
+
+
+
+
+```{r More Fits}
+fit_Bhind_Arc=glm(Bhind_Arc~I(Age^2)+Age+Name)##A fit for 3 points made total in a season
+head(fit_Bhind_Arc$coefficients,5)
+
+fit_In_Arc=glm(In_Arc~I(Age^2)+Age+Name)##A fit for 2 points made total in a season
+head(fit_In_Arc$coefficients,5)
+
+fit_FreeT=glm(FreeT~I(Age^2)+Age+Name)##A fit for free throws made total in a season
+head(fit_FreeT$coefficients,5)
+
+
+fit_OfReb=glm(OfReb~I(Age^2)+Age+Name)##A fit for offensive rebounds made total in a season
+head(fit_OfReb$coefficients,5)
+
+
+fit_DefReb=glm(DefReb~I(Age^2)+Age+Name)##A fit for defensive rebounds made total in a season
+head(fit_DefReb$coefficients,5)
+
+
+fit_Assist=glm(Assist~I(Age^2)+Age+Name)##A fit for assists made total in a season
+head(fit_Assist$coefficients,5)
+
+fit_Steal=glm(Steal~I(Age^2)+Age+Name)##A fit for Steals made total in a season
+head(fit_Steal$coefficients,5)
+
+fit_Block=glm(Block~I(Age^2)+Age+Name)##A fit for Blocks made total in a season
+head(fit_Block$coefficients,5)
+
+fit_TOV=glm(TOV~I(Age^2)+Age+Name)##A fit for turnovers made total in a season
+head(fit_TOV$coefficients,5)
+
+fit_Fouls=glm(Fouls~I(Age^2)+Age+Name)##A fit for Fouls made total in a season
+head(fit_Fouls$coefficients,5)
+```
+
+
+
+
+
+```{r More Predictins}
+pred_Bhind_Arc=predict(fit_Bhind_Arc,DatSet)#Predictions for players 3 point totals in a season at 6 different ages, one being the future
+
+pred_In_Arc=predict(fit_In_Arc,DatSet)#Predictions for players 2 point totals in a season at 6 different ages, one being the future
+
+pred_FreeT=predict(fit_FreeT,DatSet)#Predictions for players free throw totals in a season at 6 different ages, one being the future
+
+pred_OfReb=predict(fit_OfReb,DatSet)#Predictions for players offensive rebound totals in a season at 6 different ages, one being the future
+
+pred_DefReb=predict(fit_DefReb,DatSet)#Predictions for players defencsive rebounds totals in a season at 6 different ages, one being the future
+
+pred_Assist=predict(fit_Assist,DatSet)#Predictions for players assists totals in a season at 6 different ages, one being the future
+
+pred_Steal=predict(fit_Steal,DatSet)#Predictions for players assists totals in a season at 6 different ages, one being the future
+
+pred_Block=predict(fit_Block,DatSet)#Predictions for players blocks totals in a season at 6 different ages, one being the future
+
+pred_TOV=predict(fit_TOV,DatSet)#Predictions for players turnovers totals in a season at 6 different ages, one being the future
+
+pred_Fouls=predict(fit_Fouls,DatSet)#Predictions for players Fouls totals in a season at 6 different ages, one being the future
+
+
+DatSetPrime=data.frame(DatSet,pred_Bhind_Arc,pred_In_Arc,pred_FreeT,pred_OfReb,pred_DefReb,pred_Assist,pred_Steal,pred_Block,pred_TOV,pred_Fouls)
+DatSetPrime##The data set with all the predictions
+
+```
+
+
+
+
+```{r Functions for 3 pointers} 
+
+Graph_Bhind_Arc_Name=function(Name){###Graphing behind the arc using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Bhind_Arc,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted 3 pointers made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="3 Pointers Made",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_Bhind_Arc_Num=function(ii){
+
+  
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Bhind_Arc,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted 3 pointers made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="3 Pointers Made",
+ color = "Actual or Predicted")
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+}
+
+```
+
+
+
+
+
+```{r Testing 3 point graphs}
+Graph_Bhind_Arc_Num(466)
+```
+
+```{r Functions for 2 pointers} 
+
+Graph_In_Arc_Name=function(Name){###Graphing in the arc using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=In_Arc,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_In_Arc,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_In_Arc,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted 2 pointers made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="2 Pointers Made",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_In_Arc_Num=function(ii){
+
+  
+
+  
+  
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=In_Arc,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_In_Arc,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_In_Arc,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted 2 pointers made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="2 Pointers Made",
+ color = "Actual or Predicted")
+}
+  
+
+```
+
+
+
+```{r Testing 2 point graphs }
+
+Graph_In_Arc_Name("Anthony Davis")
+
+
+```
+
+
+```{r Functions for free throws} 
+
+Graph_FreeT_Name=function(Name){###Graphing free throws using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=FreeT,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_FreeT,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_FreeT,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Free Throws made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Free Throws Made",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_FreeT_Num=function(ii){
+
+  
+
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=FreeT,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_FreeT,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_FreeT,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Free Throws made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Free Throws Made",
+ color = "Actual or Predicted")
+}
+ 
+
+```
+
+
+
+```{r Testing free throw graphs}
+Graph_FreeT_Name("James Harden")
+```
+
+
+
+```{r Functions for Of Rebounds} 
+
+Graph_OfReb_Name=function(Name){###Graphing Offensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=OfReb,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_OfReb,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_OfReb,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Offensive Rebounds made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Offensive Rebounds",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_OfReb_Num=function(ii){
+
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=OfReb,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_OfReb,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_OfReb,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Offensive Rebounds made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Offensive Rebounds",
+ color = "Actual or Predicted")
+}
+
+
+ 
+
+```
+
+
+```{r Testing graphing ofreb}
+Graph_OfReb_Name("Andre Drummond")
+Graph_OfReb_Num(466)
+```
+
+
+
+
+```{r Functions for Deff Rebounds} 
+
+Graph_DefReb_Name=function(Name){###Graphing defensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=DefReb,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_DefReb,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_DefReb,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Defensive Rebounds made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Defensive Rebounds",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_DefReb_Num=function(ii){
+
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=DefReb,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_DefReb,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_DefReb,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Defensive Rebounds made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Defensive Rebounds",
+ color = "Actual or Predicted")
+}
+  
+
+ 
+
+```
+
+
+
+
+
+```{r Testing dfReb}
+
+Graph_DefReb_Name("LeBron James")
+```
+
+
+
+```{r Functions for Assists} 
+
+Graph_Assist_Name=function(Name){###Graphing defensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Assist,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Assist,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Assist,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted assists made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Assists",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_Assist_Num=function(ii){
+  
+  
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Assist,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Assist,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Assist,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted assists made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Assists",
+ color = "Actual or Predicted")
+}
+
+
+
+```
+
+
+
+```{r testing graph assist}
+Graph_Assist_Name("James Harden")
+```
+
+
+```{r Functions for Steal} 
+
+Graph_Steal_Name=function(Name){###Graphing defensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Steal,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Steal,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Steal,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted steal made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Steals",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_Steal_Num=function(ii){
+  
+  
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Steal,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Steal,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Steal,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted steal made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Steals",
+ color = "Actual or Predicted")
+}
+  
+
+
+
+```
+
+
+
+
+
+```{r tesing graph steal}
+Graph_Steal_Name("Rajon Rondo")
+
+```
+
+
+
+
+```{r Functions for Block} 
+
+Graph_Block_Name=function(Name){###Graphing defensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Steal,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Block,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Block,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Block made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Block",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_Block_Num=function(ii){
+  
+  
+ ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Steal,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Block,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Block,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Block made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Block",
+ color = "Actual or Predicted")
+}
+  
+
+
+```
+
+
+
+
+
+```{r testing graph block}
+Graph_Block_Name("LeBron James")
+Graph_Block_Num(466)
+```
+
+```{r Functions for TOV} 
+
+Graph_TOV_Name=function(Name){###Graphing defensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=TOV,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_TOV,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_TOV,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted TOV made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="TOV",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_TOV_Num=function(ii){
+  
+  
+  
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=TOV,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_TOV,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_TOV,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted TOV made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="TOV",
+ color = "Actual or Predicted")
+}
+
+  
+
+
+```
+
+
+```{r testing graph TOV}
+Graph_TOV_Name("James Harden")
+Graph_TOV_Num(466)
+```
+
+
+```{r Functions for Fouls} 
+
+Graph_Fouls_Name=function(Name){###Graphing defensive Rebounds using functions with either name strings or numbers as inputs
+ ii=(which(All_Season_Stats$Player==Name))
+ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Fouls,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Fouls,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Fouls,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Fouls made of ",Name),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Fouls",
+ color = "Actual or Predicted")
+}
+
+
+
+
+Graph_Fouls_Num=function(ii){
+  
+  
+  ggplot(DatSetPrime[(6*ii-5):(6*ii),],mapping=aes(x=Age, y=Fouls,color="Actual"))+geom_line(mapping=aes(x=Age,y=pred_Fouls,color="Predicted Curve"))+geom_point(mapping=aes(x=Age,y=pred_Fouls,color="Predicted"))+geom_point()+
+labs(title = paste0("Predicted Fouls made of ",All_Season_Stats$Player[ii]),
+ subtitle = "Based on data from 2014 to 2018",
+ x = "Age",
+ y ="Fouls",
+ color = "Actual or Predicted")
+}
+
+
+  
+
+
+```
+
+
+
+```{r testing graph fouls}
+Graph_Fouls_Name("Russell Westbrook")
+Graph_Fouls_Num(466)
+```
+#Now That I have predictions functions for all of them I can make a function of functions
+
+
+```{r MegaFun}
+MegFun=function(Player_Name="",iii=0,Bhind_Arc=F,In_Arc=F,FreeT=F,OfReb=F,DefReb=F,Assist=F,Steal=F,Block=F,TOV=F,Fouls=F){
+  if(Name==""&ii==0){
+    return("Enter A Name or Number")##The function is writen so that if you enter a Name then the number doesnt matter
+  }
+  else if(Player_Name==""){
+    Player_Name=All_Season_Stats$Player[iii]##but if u dont enter a Name then the number finds the name if it exists
+  }
+  if(Bhind_Arc==T){
+    return(Graph_Bhind_Arc_Name(Player_Name))##Do to how return works it only outputs on graph at once
+  }
+  else if(In_Arc==T){
+    return(Graph_In_Arc_Name(Player_Name))##and that graph is the leftmost true value
+  }
+  else if(FreeT==T){
+    return(Graph_FreeT_Name(Player_Name))##in the future we can update it so it can return more then one graph, as well as different graphs
+  }
+  if(OfReb==T){
+    return(Graph_OfReb_Name(Player_Name))
+  }
+    if(DefReb==T){
+    return(Graph_DefReb_Name(Player_Name))
+  }
+  if(Assist==T){
+    return(Graph_Assist_Name(Player_Name))
+  }
+  if(Steal==T){
+    return(Graph_Steal_Name(Player_Name))
+  }
+  if(Block==T){
+    return(Graph_Block_Name(Player_Name))
+  }
+  if(TOV==T){
+    return(Graph_TOV_Name(Player_Name))
+  }
+   if(Fouls==T){
+    return(Graph_Fouls_Name(Player_Name))
+  }
+
+  
+  
+  
+}
+```
+
+
+```{r testing megafun}
+MegFun(Player_Name="LeBron James",DefReb=T)
+```
+
+
