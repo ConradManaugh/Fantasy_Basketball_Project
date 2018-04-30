@@ -1,6 +1,8 @@
 ---
-title: "Regression Fit "
-output: html_document
+title: 'Regression Fit '
+output:
+  html_document: default
+  pdf_document: default
 ---
 ```{r readng all season stats}
 
@@ -396,7 +398,7 @@ head(fit1$coefficients,5)
 ```{r predict}
 pred_FG01=predict(fit1,DatSet)
 DatSet01=data.frame(DatSet,pred_FG01)
-DatSet01
+tail(DatSet01,5)
 
 ```
 
@@ -547,7 +549,7 @@ pred_Fouls=predict(fit_Fouls,DatSet)#Predictions for players Fouls totals in a s
 
 
 DatSetPrime=data.frame(DatSet,pred_Bhind_Arc,pred_In_Arc,pred_FreeT,pred_OfReb,pred_DefReb,pred_Assist,pred_Steal,pred_Block,pred_TOV,pred_Fouls)
-DatSetPrime##The data set with all the predictions
+tail(DatSetPrime,5)##The data set with all the predictions
 
 ```
 
