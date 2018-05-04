@@ -1,0 +1,117 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+### Loading in Data 
+
+```{r read-in-data}
+data_set = read.csv("DSP.csv")
+data_set
+```
+
+### Reducing Data to Only Point Guards
+
+```{r PG-data}
+# install.packages("magrittr")
+library(magrittr)
+pg_data = data_set %>%
+  subset(., Pos2 == "PG" & Year == "2019")
+  
+pg_data = pg_data[-c(1,6:16)]
+
+write.csv(pg_data, "pg_data.csv")
+```
+
+### Reducing Data to Only Point and Shooting Guards
+
+```{r SG-PG-data}
+psg_data = data_set %>%
+  subset(., Pos2 == "PG" | Pos2 == "SG" | Pos2 == "PG-SG") %>%
+  subset(., Year == "2019")
+
+psg_data = psg_data[-c(1,6:16)]
+
+psg_data
+
+write.csv(psg_data, "psg_data.csv")
+```
+
+### Reducing Data to Shooting Guards
+
+```{r SG-data}
+sg_data = data_set %>%
+  subset(., Pos2 == "SG" & Year == "2019")
+
+sg_data = sg_data[-c(1,6:16)]
+
+write.csv(sg_data, "sg_data.csv")
+```
+
+### Reducing Data to Forwards
+
+```{r F-data}
+f_data = data_set %>%
+  subset(., Pos2 == "F" | Pos2 == "SF" | Pos2 == "PF") %>%
+  subset(., Year == "2019")
+
+f_data = f_data[-c(1,6:16)]
+
+write.csv(f_data, "f_data.csv")
+```
+
+### Reducing Data to Guards and Forward
+
+```{r}
+gf_data = data_set %>%
+  subset(., Pos2 != "C" & Year == "2019")
+
+gf_data = gf_data[-c(1,6:16)]
+
+write.csv(gf_data, "gf_data.csv")
+```
+
+### Reducing Data to Small Forward
+
+```{r}
+sf_data = data_set %>%
+  subset(., Pos2 == "SF" & Year == "2019")
+
+sf_data = sf_data[-c(1,6:16)]
+
+write.csv(sf_data, "sf_data.csv")
+```
+
+### Reducing Data to Power Forward
+
+```{r}
+pf_data = data_set %>%
+  subset(., Pos2 =="PF" & Year == "2019")
+
+pf_data = pf_data[-c(1,6:16)]
+
+write.csv(pf_data, "pf_data.csv")
+```
+
+### Reducing Data to Center
+
+```{r}
+c_data = data_set %>%
+  subset(., Pos2 == "C" & Year == "2019") 
+
+c_data = c_data[-c(1,6:16)]
+
+write.csv(c_data, "c_data.csv")
+```
+
+### All Positions but Only 2019 Data
+
+```{r}
+all_data = data_set %>%
+  subset(., Year == "2019")
+
+all_data = all_data[-c(1,6:16)]
+
+write.csv(all_data, "all_data.csv")
+```
+
