@@ -78,11 +78,17 @@ ui <- fluidPage(
         
         # Show a plot of the generated distribution
         mainPanel(
-            h3("Top Fantasy Picks"),
-            tableOutput("table")
+            tabsetPanel(
+                tabPanel("Introduction", textOutput("intro")),
+                tabPanel("Top Fantasy Picks", dataTableOutput("table")),
+                tabPanel("Player Stats Graph", plotOutput("player_graph")),
+                tabPanel("Player Fantasy Point Contributions", plotOutput("ft_graph")),
+                tabPanel("Player Comparison Graphs", plotOutput("comp_graph"))
             )
+        )
     )
 )
+
 
 
 
@@ -199,6 +205,9 @@ server <- function(input, output) {
     output$table = renderTable({
         more_dataset()
     })
+    output$intro = renderText(
+        "This is a tool to use during an NBA Fantasy League Draft."
+    )
 }
 
 # Run the application 
