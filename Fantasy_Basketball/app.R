@@ -6,10 +6,15 @@
 #
 #    http://shiny.rstudio.com/
 #
-
+# install.packages("dplyr")
+# install.packages("tidyr")
+# install.packages("ggplot2")
+library("ggplot2")
+library("tidyr")
 library(dplyr)
 library(shiny)
 library(magrittr)
+graph_data = read.csv("DSP.csv")
 all_data = read.csv("all_data.csv")
 pg_data = read.csv("pg_data.csv")
 c_data = read.csv("c_data.csv")
@@ -73,6 +78,24 @@ ui <- fluidPage(
             numericInput("obs",
                          label = h6("Number of Players Shown in Table"),
                          value = 5),
+            textInput("graph_player1",
+                      label = h6("Search Player Statistics"),
+                      value = "Enter Player Name..."),
+            textInput("graph_player2",
+                      label = h6("Player You Would Like to Compare to..."),
+                      value = "Enter Second Player Name Here..."),
+            selectInput("stat",
+                        label = h6("Player Stat to Study"),
+                        choices = c("3 Point Shots",
+                                  "2 Point Shots",
+                                  "Free Throws", 
+                                  "Offensive Rebounds",
+                                  "Defensive Rebounds",
+                                  "Assists",
+                                  "Steals",
+                                  "Blocks",
+                                  "Turnovers",
+                                  "Fouls")),
             submitButton("Load Best Fantasy Picks")
         ),
         
@@ -81,7 +104,7 @@ ui <- fluidPage(
             tabsetPanel(
                 tabPanel("Introduction", textOutput("intro")),
                 tabPanel("Top Fantasy Picks", tableOutput("table")),
-                tabPanel("Player Stats Graph", plotOutput("player_graph")),
+                tabPanel("Player Actual Stats and Prediction Stats Graph", plotOutput("player_graph")),
                 tabPanel("Player Fantasy Point Contributions", plotOutput("ft_graph")),
                 tabPanel("Player Comparison Graphs", plotOutput("comp_graph"))
             )
@@ -168,6 +191,7 @@ server <- function(input, output) {
                 input$fo_weight * all_data$pred_Fouls
         }
     })
+    
     active_dataset = reactive({
         if(input$position == "Point Guard"){
             data.frame("Player" = pg_data$Name,"Predicted_Total_Points" = total_data())
@@ -202,12 +226,34 @@ server <- function(input, output) {
         top_n(active_dataset(), input$obs, Predicted_Total_Points)
     })
     
+    graph2_dataset = reactive({
+        all_data %>%
+            subset(., Name == input$graph_player1)
+    })
+    
+    reduced_graph2_dataset = reactive({
+        graph2_dataset()[-c(1:5)]
+    })
+    
+    tidy_graph2_dataset = reactive({
+        gather(reduced_graph2_dataset(), key = "stat", value = "Player")
+    })
+    
     output$table = renderTable({
         more_dataset()[order(-more_dataset()$Predicted_Total_Points),]
     })
-    output$intro = renderText(
+    
+    output$intro = renderText({
         "This is a tool to use during an NBA Fantasy League Draft."
-    )
+    })
+    
+
+    output$ft_graph = renderPlot({
+        ggplot(tidy_graph2_dataset(),
+               mapping = aes(stat, Player)) +
+            geom_bar(stat = "Identity")
+        
+    })
 }
 
 # Run the application 
