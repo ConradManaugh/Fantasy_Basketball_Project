@@ -329,7 +329,7 @@ server <- function(input, output) {
         }
     })
     
-    active_dataset = reactive({
+    active_dataset = reactive({ # Creating a dataset for each position containing players total predicted fantasy point for the next season
         if(input$position == "Point Guard"){
             data.frame("Player" = pg_data$Name,"Predicted_Total_Points" = total_data())
         }
@@ -359,24 +359,18 @@ server <- function(input, output) {
         }
     })
     
-    table_dataset = reactive({
+    table_dataset = reactive({ # Making a dataset with the top players based on their predicted fantasy score for the table output
         top_n(active_dataset(), input$obs, Predicted_Total_Points)
     })
     
-    graph2_dataset = reactive({
+    graph2_dataset = reactive({ # Subsetting the point_data() based on the input data and tidying the dataset 
         point_data() %>%
-            subset(., Name == input$graph_player1)
+            subset(., Name == input$graph_player1) %>%
+            .[-c(1:5)] %>%
+            gather(., key = "stat", value = "player")
     })
     
-    reduced_graph2_dataset = reactive({
-        graph2_dataset()[-c(1:5)]
-    })
-    
-    tidy_graph2_dataset = reactive({
-        gather(reduced_graph2_dataset(), key = "stat", value = "player")
-    })
-    
-    graph3_dataset = reactive({
+    graph3_dataset = reactive({ # Subsetting point_data() based on inputs
         point_data() %>%
             subset(., Name ==input$graph_player1 | Name == input$graph_player2)
     })
@@ -500,7 +494,7 @@ server <- function(input, output) {
     })
     
     output$ft_graph = renderPlot({  # Graph output for the fourth tab of the app
-        ggplot(tidy_graph2_dataset(),
+        ggplot(graph2_dataset(),
                mapping = aes(stat, player, fill = stat)) +
             geom_bar(stat = "Identity")
         
