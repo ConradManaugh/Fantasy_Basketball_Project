@@ -27,6 +27,8 @@ sg_data = read.csv("sg_data.csv")
 
 
 
+
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     
@@ -390,6 +392,25 @@ server <- function(input, output) {
             
             
             
+        
+    })
+    output$player_graph=renderPlot({
+        
+        
+           
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=Bhind_Arc,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted 3 pointers made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y ="3 Pointers Made",
+                     color = "Actual or Predicted")
+            
+            
+
+     
         
     })
 }
