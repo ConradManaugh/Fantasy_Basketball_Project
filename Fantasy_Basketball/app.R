@@ -359,7 +359,7 @@ server <- function(input, output) {
         }
     })
     
-    more_dataset = reactive({
+    table_dataset = reactive({
         top_n(active_dataset(), input$obs, Predicted_Total_Points)
     })
     
@@ -376,95 +376,20 @@ server <- function(input, output) {
         gather(reduced_graph2_dataset(), key = "stat", value = "player")
     })
     
-    player2_dataset = reactive({
-        point_data() %>%
-            subset(., Name == input$graph_player2)
-    })
-    
-    reduced_player2_dataset = reactive({
-        player2_dataset()[-c(1:5)]
-    })
-    
     graph3_dataset = reactive({
         point_data() %>%
             subset(., Name ==input$graph_player1 | Name == input$graph_player2)
     })
     
-    output$comp_graph = renderPlot({
-        if(input$stat == "3 Point Shots"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_3, fill = Name)) +
-                geom_bar(stat = "Identity")
-
-        }
-        else if(input$stat == "2 Point Shots"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_2, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Free Throws"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_1, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Offensive Rebounds"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Ofr, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Defensive Rebounds"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Defr, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Assists"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Assist, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Steals"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Steal, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Blocks"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Block, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Turnovers"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Tov, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-        else if(input$stat == "Fouls"){
-            ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Fouls, fill = Name)) +
-                geom_bar(stat = "Identity")
-        }
-
-    })
-
-    output$table = renderTable({
-        more_dataset()[order(-more_dataset()$Predicted_Total_Points),]
-    })
-    
-    output$intro = renderText({
+    output$intro = renderText({     # Output for the first tab of the app 
         "This is a tool to use during an NBA Fantasy League Draft."
     })
     
-
-    output$ft_graph = renderPlot({
-        ggplot(tidy_graph2_dataset(),
-               mapping = aes(stat, player, fill = stat)) +
-            geom_bar(stat = "Identity")
-            
-            
-            
-        
+    output$table = renderTable({    # Output for the second tab of the app
+        table_dataset()[order(-table_dataset()$Predicted_Total_Points),]
     })
     
-    output$player_graph=renderPlot({
+    output$player_graph=renderPlot({    # Graph output for the third tab of the app
         
         if(input$stat=="3 Point Shots"){
            
@@ -571,6 +496,71 @@ server <- function(input, output) {
             
 
     
+        
+    })
+    
+    output$ft_graph = renderPlot({  # Graph output for the fourth tab of the app
+        ggplot(tidy_graph2_dataset(),
+               mapping = aes(stat, player, fill = stat)) +
+            geom_bar(stat = "Identity")
+        
+        
+        
+        
+    })
+    
+    output$comp_graph = renderPlot({    # Graph output for the fifth tab of the app 
+        if(input$stat == "3 Point Shots"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_3, fill = Name)) +
+                geom_bar(stat = "Identity")
+            
+        }
+        else if(input$stat == "2 Point Shots"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_2, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Free Throws"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_1, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Offensive Rebounds"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Ofr, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Defensive Rebounds"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Defr, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Assists"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Assist, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Steals"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Steal, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Blocks"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Block, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Turnovers"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Tov, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
+        else if(input$stat == "Fouls"){
+            ggplot(graph3_dataset(),
+                   mapping = aes(x = Name, y = Points_from_Fouls, fill = Name)) +
+                geom_bar(stat = "Identity")
+        }
         
     })
 }
