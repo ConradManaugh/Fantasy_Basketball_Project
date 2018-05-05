@@ -25,6 +25,8 @@ psg_data = read.csv("psg_data.csv")
 sf_data = read.csv("sf_data.csv")
 sg_data = read.csv("sg_data.csv")
 
+
+
 # Define UI for application that draws a histogram
 ui <- fluidPage(
     
@@ -129,7 +131,28 @@ server <- function(input, output) {
     
     
     
-    
+    point_data=reactive({
+        new_frame=all_data
+        
+        colnames(new_frame)=c("X1","Name","Position",
+                              "Age","Year","Points_from_3","Points_from_2","Points_from_1",
+                              "Points_from_Ofr","Points_from_Defr","Points_from_Assist","Points_from_Steal",
+                              "Points_from_Block","Points_from_Tov","Points_from_Fouls")
+        
+        new_frame[,6]=point_3P()
+        new_frame[,7]=point_2P()
+        new_frame[,8]=point_FreeT()
+        new_frame[,9]=point_OfR()
+        new_frame[,10]=point_DfR()
+        new_frame[,11]=point_As()
+        new_frame[,12]=point_St()
+        new_frame[,13]=point_Bl()
+        new_frame[,14]=point_Tov()
+        new_frame[,15]=point_Fo()
+        new_frame["Total"]=point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()
+        new_frame
+        
+    })
     
     
     
@@ -138,12 +161,7 @@ server <- function(input, output) {
     
     total_data = reactive({
         if(input$position == "Point Guard"){
-            total = input$three_weight * pg_data$pred_Bhind_Arc + 
-                input$two_weight * pg_data$pred_In_Arc + input$ft_weight * pg_data$pred_FreeT +
-                input$ofr_weight * pg_data$pred_OfReb + input$dfr_weight * pg_data$pred_DefReb + 
-                input$as_weight * pg_data$pred_Assist + input$st_weight * pg_data$pred_Steal +
-                input$bl_weight * pg_data$pred_Block + input$tov_weight * pg_data$pred_TOV +
-                input$fo_weight * pg_data$pred_Fouls
+    
             
             
             
@@ -344,7 +362,7 @@ server <- function(input, output) {
     })
     
     graph2_dataset = reactive({
-        all_data %>%
+        point_data() %>%
             subset(., Name == input$graph_player1)
     })
     
@@ -367,8 +385,11 @@ server <- function(input, output) {
 
     output$ft_graph = renderPlot({
         ggplot(tidy_graph2_dataset(),
-               mapping = aes(stat, Player)) +
+               mapping = aes(stat, Player,fill="Identity")) +
             geom_bar(stat = "Identity")
+            
+            
+            
         
     })
 }
