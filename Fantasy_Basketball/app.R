@@ -396,7 +396,7 @@ server <- function(input, output) {
     })
     output$player_graph=renderPlot({
         
-        
+        if(input$stat=="3 Point Shots"){
            
             ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=Bhind_Arc,color="Actual"))+
                 geom_line(mapping=aes(x=Age,y=pred_Bhind_Arc,color="Predicted Curve"))+
@@ -406,11 +406,101 @@ server <- function(input, output) {
                      subtitle = "Based on data from 2014 to 2018",
                      x = "Age",
                      y ="3 Pointers Made",
-                     color = "Actual or Predicted")
-            
+                     color = "Actual or Predicted")}
+        else if(input$stat=="2 Point Shots"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=In_Arc,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_In_Arc,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_In_Arc,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted 2 pointers made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y ="2 Pointers Made",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Free Throws"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=FreeT,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_FreeT,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_FreeT,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted free throws made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y ="Free Throws Made",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Offensive Rebounds"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=OfReb,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_OfReb,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_OfReb,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Offensive Rebounds made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y ="Offensive Rebounds",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Defensive Rebounds"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=DefReb,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_DefReb,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_DefReb,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Defensive Rebounds made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y =" Defensive Rebounds",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Assists"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=Assist,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_Assists,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_Assists,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Assists made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y =" Assists",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Steals"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=Steal,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_Steal,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_Steal,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Steals made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y =" Steals",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Blocks"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=Block,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_Block,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_Block,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Blocks made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y =" Blocks",
+                     color = "Actual or Predicted")}
+        
+        else if(input$stat=="Fouls"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=Fouls,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_Fouls,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_Fouls,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Fouls made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y =" Fouls",
+                     color = "Actual or Predicted")}
+        else if(input$stat=="Turnovers"){ 
+            ggplot(graph_data[(which(graph_data$Name==input$graph_player1)),],mapping=aes(x=Age, y=TOV,color="Actual"))+
+                geom_line(mapping=aes(x=Age,y=pred_TOV,color="Predicted Curve"))+
+                geom_point(mapping=aes(x=Age,y=pred_TOV,color="Predicted"))+
+                geom_point()+
+                labs(title = paste0("Predicted Turnovers made of ",input$graph_player1),
+                     subtitle = "Based on data from 2014 to 2018",
+                     x = "Age",
+                     y =" Turnovers",
+                     color = "Actual or Predicted")}
             
 
-     
+    
         
     })
 }
