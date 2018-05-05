@@ -203,7 +203,7 @@ server <- function(input, output) {
     })
     
     output$table = renderTable({
-        more_dataset()
+        more_dataset()[order(-more_dataset()$Predicted_Total_Points),]
     })
     output$intro = renderText(
         "This is a tool to use during an NBA Fantasy League Draft."
