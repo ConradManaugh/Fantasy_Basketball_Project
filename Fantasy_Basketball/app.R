@@ -116,6 +116,26 @@ ui <- fluidPage(
 
 
 server <- function(input, output) {
+    point_3P = reactive(input$three_weight * all_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+    point_2P = reactive(input$two_weight * all_data$pred_In_Arc)
+    point_FreeT = reactive(input$ft_weight * all_data$pred_FreeT)
+    point_OfR = reactive(input$ofr_weight * all_data$pred_OfReb)
+    point_DfR = reactive(input$dfr_weight * all_data$pred_DefReb)
+    point_As = reactive(input$as_weight * all_data$pred_Assist)
+    point_St = reactive(input$st_weight * all_data$pred_Steal)
+    point_Bl = reactive(input$bl_weight * all_data$pred_Block)
+    point_Tov = reactive(input$tov_weight * all_data$pred_TOV)
+    point_Fo = reactive(input$fo_weight * all_data$pred_Fouls)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     total_data = reactive({
         if(input$position == "Point Guard"){
             total = input$three_weight * pg_data$pred_Bhind_Arc + 
@@ -124,71 +144,168 @@ server <- function(input, output) {
                 input$as_weight * pg_data$pred_Assist + input$st_weight * pg_data$pred_Steal +
                 input$bl_weight * pg_data$pred_Block + input$tov_weight * pg_data$pred_TOV +
                 input$fo_weight * pg_data$pred_Fouls
+            
+            
+            
+            
+            point_3P = reactive(input$three_weight * pg_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * pg_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * pg_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * pg_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * pg_data$pred_DefReb)
+            point_As = reactive(input$as_weight * pg_data$pred_Assist)
+            point_St = reactive(input$st_weight * pg_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * pg_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * pg_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * pg_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
+            
         }
         else if(input$position == "Point / Shooting Guard"){
-            total = input$three_weight * psg_data$pred_Bhind_Arc + 
-                input$two_weight * psg_data$pred_In_Arc + input$ft_weight * psg_data$pred_FreeT +
-                input$ofr_weight * psg_data$pred_OfReb + input$dfr_weight * psg_data$pred_DefReb + 
-                input$as_weight * psg_data$pred_Assist + input$st_weight * psg_data$pred_Steal + 
-                input$bl_weight * psg_data$pred_Block + input$tov_weight * psg_data$pred_TOV +
-                input$fo_weight * psg_data$pred_Fouls   
+         
+            
+            point_3P = reactive(input$three_weight * psg_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * psg_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * psg_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * psg_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * psg_data$pred_DefReb)
+            point_As = reactive(input$as_weight * psg_data$pred_Assist)
+            point_St = reactive(input$st_weight * psg_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * psg_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * psg_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * psg_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
+            
+            
+            
         }
         else if(input$position == "Shooting Guard"){
-            total = input$three_weight * sg_data$pred_Bhind_Arc + 
-                input$two_weight * sg_data$pred_In_Arc + input$ft_weight * sg_data$pred_FreeT +
-                input$ofr_weight * sg_data$pred_OfReb + input$dfr_weight * sg_data$pred_DefReb + 
-                input$as_weight * sg_data$pred_Assist + input$st_weight * sg_data$pred_Steal + 
-                input$bl_weight * sg_data$pred_Block + input$tov_weight * sg_data$pred_TOV +
-                input$fo_weight * sg_data$pred_Fouls  
+         
+            
+            point_3P = reactive(input$three_weight * sg_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * sg_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * sg_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * sg_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * sg_data$pred_DefReb)
+            point_As = reactive(input$as_weight * sg_data$pred_Assist)
+            point_St = reactive(input$st_weight * sg_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * sg_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * sg_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * sg_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
+            
+            
             
         }
         else if(input$position == "Forward"){
-            total = input$three_weight * f_data$pred_Bhind_Arc + 
-                input$two_weight * f_data$pred_In_Arc + input$ft_weight * f_data$pred_FreeT +
-                input$ofr_weight * f_data$pred_OfReb + input$dfr_weight * f_data$pred_DefReb + 
-                input$as_weight * f_data$pred_Assist + input$st_weight * f_data$pred_Steal + 
-                input$bl_weight * f_data$pred_Block + input$tov_weight * f_data$pred_TOV +
-                input$fo_weight * f_data$pred_Fouls  
+           
+            
+            point_3P = reactive(input$three_weight * f_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * f_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * f_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * f_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * f_data$pred_DefReb)
+            point_As = reactive(input$as_weight * f_data$pred_Assist)
+            point_St = reactive(input$st_weight * f_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * f_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * f_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * f_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
+            
+            
+            
+            
+            
+            
         }
         else if(input$position == "Guard / Forward"){
-            total = input$three_weight * gf_data$pred_Bhind_Arc + 
-                input$two_weight * gf_data$pred_In_Arc + input$ft_weight * gf_data$pred_FreeT +
-                input$ofr_weight * gf_data$pred_OfReb + input$dfr_weight * gf_data$pred_DefReb + 
-                input$as_weight * gf_data$pred_Assist + input$st_weight * gf_data$pred_Steal + 
-                input$bl_weight * gf_data$pred_Block + input$tov_weight * gf_data$pred_TOV +
-                input$fo_weight * gf_data$pred_Fouls  
+          
+            
+            point_3P = reactive(input$three_weight * gf_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * gf_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * gf_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * gf_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * gf_data$pred_DefReb)
+            point_As = reactive(input$as_weight * gf_data$pred_Assist)
+            point_St = reactive(input$st_weight * gf_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * gf_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * gf_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * gf_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
+            
+            
+            
+            
+            
         }
         else if(input$position == "Small Forward"){
-            total = input$three_weight * sf_data$pred_Bhind_Arc + 
-                input$two_weight * sf_data$pred_In_Arc + input$ft_weight * sf_data$pred_FreeT +
-                input$ofr_weight * sf_data$pred_OfReb + input$dfr_weight * sf_data$pred_DefReb + 
-                input$as_weight * sf_data$pred_Assist + input$st_weight * sf_data$pred_Steal + 
-                input$bl_weight * sf_data$pred_Block + input$tov_weight * sf_data$pred_TOV +
-                input$fo_weight * sf_data$pred_Fouls  
+            
+            
+            
+            point_3P = reactive(input$three_weight * sf_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * sf_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * sf_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * sf_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * sf_data$pred_DefReb)
+            point_As = reactive(input$as_weight * sf_data$pred_Assist)
+            point_St = reactive(input$st_weight * sf_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * sf_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * sf_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * sf_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
+            
         }
         else if(input$position == "Power Forward"){
-            total = input$three_weight * pf_data$pred_Bhind_Arc + 
-                input$two_weight * pf_data$pred_In_Arc + input$ft_weight * pf_data$pred_FreeT +
-                input$ofr_weight * pf_data$pred_OfReb + input$dfr_weight * pf_data$pred_DefReb + 
-                input$as_weight * pf_data$pred_Assist + input$st_weight * pf_data$pred_Steal + 
-                input$bl_weight * pf_data$pred_Block + input$tov_weight * pf_data$pred_TOV +
-                input$fo_weight * pf_data$pred_Fouls 
+
+            
+            
+            point_3P = reactive(input$three_weight * pf_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * pf_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * pf_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * pf_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * pf_data$pred_DefReb)
+            point_As = reactive(input$as_weight * pf_data$pred_Assist)
+            point_St = reactive(input$st_weight * pf_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * pf_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * pf_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * pf_data$pred_Fouls)
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
         }
         else if(input$position == "Center"){
-            total = input$three_weight * c_data$pred_Bhind_Arc + 
-                input$two_weight * c_data$pred_In_Arc + input$ft_weight * c_data$pred_FreeT +
-                input$ofr_weight * c_data$pred_OfReb + input$dfr_weight * c_data$pred_DefReb + 
-                input$as_weight * c_data$pred_Assist + input$st_weight * c_data$pred_Steal + 
-                input$bl_weight * c_data$pred_Block + input$tov_weight * c_data$pred_TOV +
-                input$fo_weight * c_data$pred_Fouls
+        
+            point_3P = reactive(input$three_weight * c_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * c_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * c_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * c_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * c_data$pred_DefReb)
+            point_As = reactive(input$as_weight * c_data$pred_Assist)
+            point_St = reactive(input$st_weight * c_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * c_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * c_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * c_data$pred_Fouls)
+            
+            
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
         }
         else if(input$position == "All Positions"){
-            total = input$three_weight * all_data$pred_Bhind_Arc + 
-                input$two_weight * all_data$pred_In_Arc + input$ft_weight * all_data$pred_FreeT +
-                input$ofr_weight * all_data$pred_OfReb + input$dfr_weight * all_data$pred_DefReb + 
-                input$as_weight * all_data$pred_Assist + input$st_weight * all_data$pred_Steal + 
-                input$bl_weight * all_data$pred_Block + input$tov_weight * all_data$pred_TOV +
-                input$fo_weight * all_data$pred_Fouls
+            point_3P = reactive(input$three_weight * all_data$pred_Bhind_Arc)#Make a vector of points from each catagory
+            point_2P = reactive(input$two_weight * all_data$pred_In_Arc)
+            point_FreeT = reactive(input$ft_weight * all_data$pred_FreeT)
+            point_OfR = reactive(input$ofr_weight * all_data$pred_OfReb)
+            point_DfR = reactive(input$dfr_weight * all_data$pred_DefReb)
+            point_As = reactive(input$as_weight * all_data$pred_Assist)
+            point_St = reactive(input$st_weight * all_data$pred_Steal)
+            point_Bl = reactive(input$bl_weight * all_data$pred_Block)
+            point_Tov = reactive(input$tov_weight * all_data$pred_TOV)
+            point_Fo = reactive(input$fo_weight * all_data$pred_Fouls)
+            total = point_3P()+point_2P()+point_FreeT()+point_OfR()+point_DfR()+point_As()+point_St()+point_Bl()+point_Tov()+point_Fo()#Sum of all is total points
         }
     })
     
