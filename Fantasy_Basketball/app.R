@@ -431,7 +431,7 @@ server <- function(input, output) {
                 geom_line(mapping=aes(x=Age,y=pred_DefReb,color="Predicted Curve"))+
                 geom_point(mapping=aes(x=Age,y=pred_DefReb,color="Predicted"))+
                 geom_point()+
-                labs(title = paste0("Predicted Defensive Rebounds made of ",input$graph_player1),
+                labs(title = paste0("Predicted Defensive Rebounds made by ",input$graph_player1),
                      subtitle = "Based on data from 2014 to 2018",
                      x = "Age",
                      y =" Defensive Rebounds",
@@ -496,7 +496,13 @@ server <- function(input, output) {
     output$ft_graph = renderPlot({  # Graph output for the fourth tab of the app
         ggplot(graph2_dataset(),
                mapping = aes(stat, player, fill = stat)) +
-            geom_bar(stat = "Identity")
+            geom_bar(stat = "Identity") +
+            labs(title = paste0("Predicted 2019 Fantasy Point",input$graph_player1),
+                 subtitle = "All Stats Considered and Total",
+                 x = "Stat",
+                 y = "Predicted Fantasy Points",
+                 color = "Stat") +
+            theme(axis.text.x = element_text(angle = 90, hjust = 1))
         
         
         
@@ -507,53 +513,103 @@ server <- function(input, output) {
         if(input$stat == "3 Point Shots"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_3, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
             
         }
         else if(input$stat == "2 Point Shots"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_2, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Free Throws"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_1, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Offensive Rebounds"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Ofr, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Defensive Rebounds"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Defr, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Assists"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Assist, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Steals"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Steal, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Blocks"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Block, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Turnovers"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Tov, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         else if(input$stat == "Fouls"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_Fouls, fill = Name)) +
-                geom_bar(stat = "Identity")
+                geom_bar(stat = "Identity") +
+                labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
+                     subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
+                     x = "Player",
+                     y = paste0("Predicted", input$stat, " Fantasy Points"),
+                     color = "Player")
         }
         
     })
