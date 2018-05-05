@@ -80,7 +80,7 @@ ui <- fluidPage(
         mainPanel(
             tabsetPanel(
                 tabPanel("Introduction", textOutput("intro")),
-                tabPanel("Top Fantasy Picks", dataTableOutput("table")),
+                tabPanel("Top Fantasy Picks", tableOutput("table")),
                 tabPanel("Player Stats Graph", plotOutput("player_graph")),
                 tabPanel("Player Fantasy Point Contributions", plotOutput("ft_graph")),
                 tabPanel("Player Comparison Graphs", plotOutput("comp_graph"))
