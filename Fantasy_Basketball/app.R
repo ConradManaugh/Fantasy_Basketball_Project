@@ -375,7 +375,15 @@ server <- function(input, output) {
     })
     
     output$intro = renderText({     # Output for the first tab of the app 
-        "This is a tool to use during an NBA Fantasy League Draft."
+        "This is a tool to use during an NBA Fantasy League Draft to assist in picking players with the highest fantasy points predicted for the 2019 season based on your league's scoring system.
+        
+        To use this app, first, choose a position that you are looking to draft and enter the weight of each statistic (how many points each statistic is worth in your league) and enter the number of top performing players you would like to see in the Number of Players Shown in Table input. 
+            For example, if each turnover is worth minus one fantasy point put -1 in the Weight of Turnovers input. 
+        Then press enter and click on the tab title Top Fantasy Picks where you will find a table ranking the players we predicted will have the top total fantasy points based on your leagues scoring rules. 
+        
+        Next, based on the table, you can enter a players name into the Search Player Prediction input (Warning: be sure to enter the players name how it appears in the table) and choose a particular statistic in the Player Stat to Study input. Once you hit submit go to the tab titled Player Actual Stats and Prediction Stats Graph and you will find a graph of that players predicted and actual performance of that particular statistic in the past five seasons. You can also go to the tab titled Player Fantasy Point Contribution to find that players predicted fantasy score for each individual statistic in the 2019 season. 
+        
+        Finally, you can enter a second players name into the Player You Would Like to Compare to input and change the statistic if you desire. Once you press submit you can go to the final tab and will find a graph comparing the predicted fantasy score for the 2019 season for each player."
     })
     
     output$table = renderTable({    # Output for the second tab of the app
