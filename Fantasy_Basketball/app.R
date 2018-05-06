@@ -40,15 +40,14 @@ ui <- fluidPage(
         sidebarPanel(
             selectInput("position",
                         label = h5("Position"),
-                        choices = c("Point Guard",
+                        choices = c("All Positions","Point Guard",
                         "Point / Shooting Guard",
                         "Shooting Guard",
                         "Forward",
                         "Guard / Forward",
                         "Small Forward",
                         "Power Forward",
-                        "Center",
-                        "All Positions")),
+                        "Center")),
             numericInput("three_weight",
                          label = h5("Weight of 3PT"),
                          value = 1), 
@@ -497,7 +496,7 @@ server <- function(input, output) {
         ggplot(graph2_dataset(),
                mapping = aes(stat, player, fill = stat)) +
             geom_bar(stat = "Identity") +
-            labs(title = paste0("Predicted 2019 Fantasy Point",input$graph_player1),
+            labs(title = paste0("Predicted 2019 Fantasy Point ",input$graph_player1),
                  subtitle = "All Stats Considered and Total",
                  x = "Stat",
                  y = "Predicted Fantasy Points",
