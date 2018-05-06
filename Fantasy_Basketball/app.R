@@ -136,9 +136,9 @@ server <- function(input, output) {
         new_frame=all_data
         
         colnames(new_frame)=c("X1","Name","Position",
-                              "Age","Year","Points_from_3","Points_from_2","Points_from_1",
-                              "Points_from_Ofr","Points_from_Defr","Points_from_Assist","Points_from_Steal",
-                              "Points_from_Block","Points_from_Tov","Points_from_Fouls")
+                              "Age","Year","Three_Points","Two_Points","Free_Throws",
+                              "Offensive_Rebounds","Defensive_Rebounds","Assists","Steals",
+                              "Blocks","Turnovers","Fouls")
         
         new_frame[,6]=point_3P()
         new_frame[,7]=point_2P()
@@ -511,7 +511,7 @@ server <- function(input, output) {
     output$comp_graph = renderPlot({    # Graph output for the fifth tab of the app 
         if(input$stat == "3 Point Shots"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_3, fill = Name)) +
+                   mapping = aes(x = Name, y = Three_Points, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -520,7 +520,7 @@ server <- function(input, output) {
                      color = "Player")
             
         }
-        else if(input$stat == "2 Point Shots"){
+        else if(input$stat == "Two_Points"){
             ggplot(graph3_dataset(),
                    mapping = aes(x = Name, y = Points_from_2, fill = Name)) +
                 geom_bar(stat = "Identity") +
@@ -532,7 +532,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Free Throws"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_1, fill = Name)) +
+                   mapping = aes(x = Name, y = Free_Throws, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -542,7 +542,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Offensive Rebounds"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Ofr, fill = Name)) +
+                   mapping = aes(x = Name, y = Offensive_Rebounds, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -552,7 +552,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Defensive Rebounds"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Defr, fill = Name)) +
+                   mapping = aes(x = Name, y = Defensive_Rebounds, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -562,7 +562,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Assists"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Assist, fill = Name)) +
+                   mapping = aes(x = Name, y = Assists, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -572,7 +572,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Steals"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Steal, fill = Name)) +
+                   mapping = aes(x = Name, y = Steals, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -582,7 +582,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Blocks"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Block, fill = Name)) +
+                   mapping = aes(x = Name, y = Blocks, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -592,7 +592,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Turnovers"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Tov, fill = Name)) +
+                   mapping = aes(x = Name, y = Turnovers, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
@@ -602,7 +602,7 @@ server <- function(input, output) {
         }
         else if(input$stat == "Fouls"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_Fouls, fill = Name)) +
+                   mapping = aes(x = Name, y = Fouls, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
