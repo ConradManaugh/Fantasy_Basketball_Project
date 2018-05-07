@@ -13,7 +13,7 @@ Fantasy sports have been a popular way for fans to get more knowledgeable and in
 
 One of the most popular fantasy sports people participate in is fantasy basketball for the NBA. The first step when participating in fantasy basketball is drafting a team which usually consists of about thirteen players and there can be restrictions on how many players of each position an individual may draft (This all depends on the specific league one participates in). Once a team has been drafted, the league determines which statistics will be counted as fantasy points and how many fantasy points each statistic is worth. For example, a block counts for 1 fantasy points while a steal counts for 2. After this has been set and the NBA season begins, each night the fantasy points for each participant is totaled and the participant at the end of the regular season with the most fantasy points wins. Therefore, when drafting players one needs to be able to analyze players pasts statistics, predict future player statistics and weigh them based on the determine fantasy point scoring system to draft a team that will make them the optimal amount of points for the season. 
 
-With all the possible statistics to consider (depending on the particular fantasy league one is apart off), we have created a tool for fantasy NBA participants to use during their draft to help them make the best possible team selections. This tool allows a participant to input their individual league scoring system and the players or statistics of interest and return the best possible players they could select based on NBA players statistics in the past five years and predictive modeling. Along with the output of the predicted best team, there are graphical representations of why the particular players are chosen. 
+With all the possible statistics to consider (depending on the particular fantasy league one is apart off), we hope to create a tool for fantasy NBA participants to use during their draft to help them make the best possible team selections. This tool ideally would allow a participant to input their individual league scoring system and the players that have already been selected in the draft and return the best possible team they could select based on NBA players statistics in the past five years and predictive modeling. Along with the output of the predicted best team, there will be graphical representations of why the particular players were chosen. 
 
 Our idea stated above matches the course focus on statistical programing because it involves taking a large data set and using a data pipeline in order to use that dataset to make prediction on NBA players future performance based on their past performance (their past statistics). We will also be providing visual representation of the data in the form of graphs which will compare players, as well as, coding a shiny app for fantasy league participants to easily customize the data pipeline to their personal fantasy league rules. 
 
@@ -130,3 +130,25 @@ Tang, Steven. 2014. “Drafting a Fantasy Basketball Team With Help From Statist
 
 
 
+```{r}
+Name=c("Lebron James", "Lebron James","Derrick Rose","Derrick Rose")
+Team=c("CLE","CLE","CHI","CHI")
+Age=c(19,33,20,21)
+year=c(2003,2017,2008,2009)
+points=c(20.9,27.5,16.8,20.8)
+offrebounds=c(1.3,1.2,1.2,.8)
+defrebounds=c(4.2,7.5,2.7,2.9)
+steals=c(1.6,1.4,.8,.7)
+fouls=c(1.9,1.6,1.5,1.2)
+turnovers=c(3.5,4.2,2.5,2.8)
+fgperc=c(.417,.542,.475,.489)
+ftperc=c(.754,.731,.788,.766)
+BaseData=data.frame(Name,Team,Age,year,points,offrebounds,defrebounds,steals,fouls,turnovers,fgperc,ftperc)
+BaseData
+```
+
+
+An example of the dataset that we will use. 
+
+
+![Sketch of Plan](img/plan_sketch.JPG)
