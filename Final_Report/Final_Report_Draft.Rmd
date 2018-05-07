@@ -3,8 +3,8 @@ title: "Group_Proposal"
 author: "Team Fantasy"
 date: "4/12/2018"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 ### Introduction
 
@@ -66,7 +66,7 @@ In order to complete the project, we must complete the following tasks…
 
 4.	Create the shiny app (Everyone)
 
-![Figure 1. The ganett chart above describes the timeline set in place to complete the tasks stated for this project.](ganett_chart.png)
+
 
 
 ### Conclusion
@@ -127,28 +127,13 @@ Tang, Steven. 2014. “Drafting a Fantasy Basketball Team With Help From Statist
 
 ### Appendix
 
+# Variable List
 
+Data is organized in two different ways, by year with each player having 6 observations, or by player, with each player having one observation. The data that is organized by player is split into multiple data sets by player position. All data sets mentioned are in the folder Fantasy_Basketball
 
+Varialbles in the data set organized by player
 
-```{r}
-Name=c("Lebron James", "Lebron James","Derrick Rose","Derrick Rose")
-Team=c("CLE","CLE","CHI","CHI")
-Age=c(19,33,20,21)
-year=c(2003,2017,2008,2009)
-points=c(20.9,27.5,16.8,20.8)
-offrebounds=c(1.3,1.2,1.2,.8)
-defrebounds=c(4.2,7.5,2.7,2.9)
-steals=c(1.6,1.4,.8,.7)
-fouls=c(1.9,1.6,1.5,1.2)
-turnovers=c(3.5,4.2,2.5,2.8)
-fgperc=c(.417,.542,.475,.489)
-ftperc=c(.754,.731,.788,.766)
-BaseData=data.frame(Name,Team,Age,year,points,offrebounds,defrebounds,steals,fouls,turnovers,fgperc,ftperc)
-BaseData
-```
-
-
-An example of the dataset that we will use. 
-
-
-![Sketch of Plan](img/plan_sketch.JPG)
+X1: A number representing the players position in an aplphabetically organized list
+Name: Player's name, one for each player
+Age: Players Age in year 2018
+Position: Players Position
