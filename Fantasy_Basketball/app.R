@@ -520,9 +520,9 @@ paste("This is a tool to use during an NBA Fantasy League Draft to assist", "in 
                      color = "Player")
             
         }
-        else if(input$stat == "Two_Points"){
+        else if(input$stat == "2 Point Shots"){
             ggplot(graph3_dataset(),
-                   mapping = aes(x = Name, y = Points_from_2, fill = Name)) +
+                   mapping = aes(x = Name, y = Two_Points, fill = Name)) +
                 geom_bar(stat = "Identity") +
                 labs(title = paste0("2019 Fantasty ", input$stat, " Prediction"),
                      subtitle = paste0("Comparison of ",input$graph_player1, " and ", input$graph_player2),
