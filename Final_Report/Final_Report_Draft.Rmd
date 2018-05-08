@@ -57,6 +57,16 @@ In summation we will have to write code that retrieves the data for current play
 
 ### Discussion
 
+Then users are able to select the player with the highest score if he has not been picked. Users will also look at the player’s situation under the column of the “player actual stats and prediction stats graph”.  They can check whether the player is going to his prime or being decline over years. It is critical for users to make the decision. Different league will have different distribution on the weight of player stats. For example, some league will count three points as six points per shot. Others will count defensive rebound as three points per one. It is all about the setting. Thus, under the column of the “player fantasy point distribution”, user can see what is the player’s advantage or drawback on each category. Then they can decide whether they want to pick him according to the rules of their league. When they have difficulty on deciding between choosing two players, they can put two player’s name in the select box to see the comparison graph under the column of the “player comparison graphs of predictions stats”. It is helpful for users when they are in dilemma of choosing one of two players. Therefore, the app reflect our goal well that we provide a fantasy nba recommender for fans to select their optimal choice of player. 
+
+
+
+
+
+
+
+
+
 
 ### Conclusion
 In general, our goal is to help fantasy basketball fans draft their players by analyzing players’ past statistics in order to make the optimal team for themselves. We will create the tool for fantasy NBA participants who will use it during the draft to come out the best team selections. Inside the app, we will follow the analytical data pipelines phases. We are going to import data from website, and then we will tidy the data by using stringr, rvest, and tidyr. 
