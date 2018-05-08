@@ -6,4 +6,4 @@
 
 # The folder Proposal contains the previously graded proposal.
 
-#The folder Final_Report contains the final report for the project
+# The folder Final_Report contains the final report for the project
