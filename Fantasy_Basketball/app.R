@@ -6,9 +6,9 @@
 #
 #    http://shiny.rstudio.com/
 #
-# install.packages("dplyr")
-# install.packages("tidyr")
-# install.packages("ggplot2")
+install.packages("dplyr")
+install.packages("tidyr")
+install.packages("ggplot2")
 library("ggplot2")
 library("tidyr")
 library("dplyr")

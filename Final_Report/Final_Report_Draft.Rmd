@@ -1,29 +1,31 @@
 ---
-title: "Group_Proposal"
-author: "Team Fantasy"
-date: "4/12/2018"
+title: "Final Report: Team Fantasy"
+author: "Anne Janulis,Conrad Manaugh,Zhaobin Liu(zliu113)"
+date: "5/7/2018"
 output:
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
+
 ### Introduction
 
 
-Fantasy sports have been a popular way for fans to get more knowledgeable and interested into the sports they love. Fantasy sports began as board and card games 50 years ago and have exploded since it was introduced to the internet. The appeal to fantasy sports is they allow fans to act as owners, managers and coaches of professional teams by allowing them to draft a team and watch the season unfold successfully or catastrophically. 
+Fantasy sports have been a popular way for fans to get more knowledgeable and interested into the sports they love. One of the most popular fantasy sports people participate in is fantasy basketball for the NBA. Everyone wants to have the best team over the other members in their competitive standard league. Thus, the problem becomes how to select the best player in each round from the remaining list of players? What dataset should we look at from players? Which category is the most crucial for fantasy player to win the top one? 
 
-One of the most popular fantasy sports people participate in is fantasy basketball for the NBA. The first step when participating in fantasy basketball is drafting a team which usually consists of about thirteen players and there can be restrictions on how many players of each position an individual may draft (This all depends on the specific league one participates in). Once a team has been drafted, the league determines which statistics will be counted as fantasy points and how many fantasy points each statistic is worth. For example, a block counts for 1 fantasy points while a steal counts for 2. After this has been set and the NBA season begins, each night the fantasy points for each participant is totaled and the participant at the end of the regular season with the most fantasy points wins. Therefore, when drafting players one needs to be able to analyze players pasts statistics, predict future player statistics and weigh them based on the determine fantasy point scoring system to draft a team that will make them the optimal amount of points for the season. 
+Again, one of the most popular fantasy sports people participate in is fantasy basketball for the NBA. It has a vast number of fans. There is no doubt they all want to get a good team. They can act as owners, managers and coaches of their team by drafting a team. Many of them are new to this game. Once a team has been drafted, the league determines which statistics will be counted as fantasy points and how many fantasy points each statistic is worth. For example, a block counts for 1 fantasy points while a steal counts for 2. After this has been set and the NBA season begins, each night the fantasy points for each participant is totaled and the participant at the end of the regular season with the most fantasy points wins.Therefore, when drafting players one needs to be able to analyze players pasts statistics, predict future player statistics and weigh them based on the determine fantasy point scoring system to draft a team that will make them the optimal amount of points for the season. Thus, it is very helpful for them if they can use some tools or data set of the basketball data. That is why we are going to create a shiny app to help users get familiar with players and their data. We believe it will be a great tool for them to enjoy and select the best players in each round. 
 
-With all the possible statistics to consider (depending on the particular fantasy league one is apart off), we hope to create a tool for fantasy NBA participants to use during their draft to help them make the best possible team selections. This tool ideally would allow a participant to input their individual league scoring system and the players that have already been selected in the draft and return the best possible team they could select based on NBA players statistics in the past five years and predictive modeling. Along with the output of the predicted best team, there will be graphical representations of why the particular players were chosen. 
+DESCRIPTION OF DATA
 
-Our idea stated above matches the course focus on statistical programing because it involves taking a large data set and using a data pipeline in order to use that dataset to make prediction on NBA players future performance based on their past performance (their past statistics). We will also be providing visual representation of the data in the form of graphs which will compare players, as well as, coding a shiny app for fantasy league participants to easily customize the data pipeline to their personal fantasy league rules. 
-
-
+Our idea includes many skills from the course which is about the statistical programming. For example, we are using the knowledge of how to import a dataset from the csv file online. There does need the skills of subsetting data from the course. We divide the position of basketball into our shiny app. Later on, we provide some graphs between many variables to see why such a player is good or bad to pick at this point. We have used many packages, such as ggplot2, readr, and stirngr. We also clean data by the skill of tidy data we have learned from the class. We are providing visual representation of the data in the form of graphs which will compare players, as well as, coding a shiny app for fantasy league participants to easily customize the data pipeline to their personal fantasy league rules. Overall, we have already using a lot of skills from courses.
+ 
+ 
 ### Related Work
 
-Someone had tried to analyze the data to prepare for the draft strategy for the new season in 14-team basketball league. He took the data from cutting and copying on ESPN.com and NBA.com. He put a flat file of the top 250 players from the previous season. Then he created a binary variable for the top 42 players (3 players per 14 teams). The “1” means the player is a top 3 players, otherwise he is not. He used 28 independent variables from the previous season to identify the “top 42 players”. He came up with conclusions that field-goal percentage, assist and blocks are the difference-makers because most players in NBA are good at points and rebounds. However, assists and blocks are rarer so that they are more valuable to a fantasy team. 
+Some people had tried to analyze the data to prepare for the draft strategy for the new season in 14-team basketball league. He took the data from cutting and copying on ESPN.com and NBA.com. He put a flat file of the top 250 players from the previous season. Then he created a binary variable for the top 42 players (3 players per 14 teams). The “1” means the player is a top 3 players, otherwise he is not. He used 28 independent variables from the previous season to identify the “top 42 players”. He came up with conclusions that field-goal percentage, assist and blocks are the difference-makers because most players in NBA are good at points and rebounds. However, assists and blocks are rarer so that they are more valuable to a fantasy team. 
+
 Other projects include computing the average stats for each categories of players. Some of the other are having the graph comparing the specific player and league’s average. Or group comes up data calculating the standard deviation to see how far away a player is from average.
 
-Comparing to other projects, our group will use the bigger dataset. Most projects are using previous year’s dataset for predicting the future data. We are going to use the data in the past five years to make a more precise prediction for player’s future performance. One of the most difference is that our group will use the Shiny app in R. Most projects online are only included complex graphs or prolix passages that make reader hard to understand their ideas. For us, we will make the Shiny app that looks very easy and clear for people to manipulate. For example, we will list all our players. People can click each of them. Then they can look at each player’s trend data whether they are getting better or worse or the graph comparison between players. It is very simple for people to control in the app. All the data fantasy NBA participants want it will exist in the app. If they want to see the difference between players, they also can click the graphs to see their difference in various categories, such as points, rebounds, assists and so on, so they will figure out what type of player they are looking for. Thus, our app is serving as a recommender for fantasy basketball player to select their team. 
+Comparing to other projects, our group use the bigger dataset. Most projects are using previous year’s dataset for predicting the future data. We use the data in the past five years to make a more precise prediction for player’s future performance. One of the most difference is that our group use the Shiny app in R. Most projects online are only included complex graphs or prolix passages that make reader hard to understand their ideas. For us, we make the Shiny app that looks clear for people to manipulate. For example, we have provided a lot of input table on the left of our app, such as the weight of point, the weight of rebound, player name, the player you would like to compare to and player stat to study. People can input their data in each of them. Then they can look at each player’s trend data whether they are getting better or worse or the graph comparison between players. It is very simple for people to control in the app. Most of the data fantasy NBA participants want it exist in the app. If they want to see the difference between players, they also can type in two players’ name to see the comparison. Thus, user can figure out what type of player they are looking for. Thus, our app is serving as a recommender for fantasy basketball player to select what kind of player they want. 
 
 
 
@@ -51,22 +53,9 @@ Regarding the graphs that we will compose using our data, the graphs are either 
 In summation we will have to write code that retrieves the data for current players as well as these players former years. We then must write code that sorts this data into tidy and usable datasets. Then we need to write a time series model that takes players past NBA performances and predicts next years performance. We then must code a shiny interface that takes these predicted and historic point values and displays them along with players name, team, and position. Lastly, our shiny application must have a way to create graphs that explain different players differences as well as the idea behind our prediction.
 
 
-### Feasibility
 
 
-We believe that all the goals for this fantasy team selector tool we will be able to create by the end of the semester.  This includes the graphical representations of players current and past statistics, graphical comparisons of players, a shiny app that allows for customizability to different league rules and the selection of a fantasy league team. However, if we do run into complications during the creation process, we may have to scale back the amount of customizability provided in the app in order to complete this project on time. 
-
-In order to complete the project, we must complete the following tasks… 
-
-1.	Web scrape and tidy the NBA statistics data (Anne)
-
-2.	Write code to create prediction data through time series modeling (Conrad)
-
-3.	Visually/Graphically represent the prediction data (Zhaobin)
-
-4.	Create the shiny app (Everyone)
-
-
+### Discussion
 
 
 ### Conclusion
