@@ -7,7 +7,7 @@ output:
   html_document: default
 ---
 ###2019 NBA Fantasy Draft Aid
-##Team Name: Team Fantasy
+##Team Name: Team Fantasy/group-project-Randomassignedgroup1
 ##Team Members: Conrad Manaugh, Anne Janulis,Zhaobin Liu
 ##Net IDs: Manaugh2, ajanuli2,zliu113
 
